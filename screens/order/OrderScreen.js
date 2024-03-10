@@ -13,7 +13,7 @@ const orders = [
     companyName: 'FPT', 
     locationDetailGet: 'Hai Bà Trưng', 
     locationDetailDelivery: 'Trần Hưng Đạo', 
-    status: 'success',
+    status: 'delivering',
     items: [
       { itemName: 'TV', description: 'Thiết bị điện tử', unitPrice: 10, quantityItem: 2, unitWeight: 1, length: 5, width: 3, height: 2 },
       { itemName: 'Laptop', description: 'Laptop description', unitPrice: 15, quantityItem: 1, unitWeight: 2, length: 6, width: 4, height: 3 }
@@ -41,7 +41,7 @@ const orders = [
     companyName: 'TGDD', 
     locationDetailGet: 'Location A', 
     locationDetailDelivery: 'Location B', 
-    status: 'delivering',
+    status: 'success',
     items: [
       { itemName: 'Product A', description: 'Description of Product A', unitPrice: 10, quantityItem: 2, unitWeight: 1, length: 5, width: 3, height: 2 },
       { itemName: 'Product B', description: 'Description of Product B', unitPrice: 20, quantityItem: 3, unitWeight: 1.5, length: 7, width: 4, height: 2 },
@@ -56,7 +56,7 @@ const orders = [
     companyName: 'GearVN', 
     locationDetailGet: 'Location A', 
     locationDetailDelivery: 'Location B', 
-    status: 'delivering',
+    status: 'success',
     items: [
       { itemName: 'Product A', description: 'Description of Product A', unitPrice: 10, quantityItem: 2, unitWeight: 1, length: 5, width: 3, height: 2 },
       { itemName: 'Product B', description: 'Description of Product B', unitPrice: 20, quantityItem: 3, unitWeight: 1.5, length: 7, width: 4, height: 2 },

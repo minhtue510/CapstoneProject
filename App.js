@@ -8,10 +8,11 @@ import HomeScreen from './screens/home/HomeScreen';
 import OrderScreen from './screens/order/OrderScreen';
 import ProfileScreen from './screens/profile/ProfileScreen';
 import LoginScreen from './screens/login/LoginScreen';
-import OrderDetailScreen from './screens/orderDetail/OrderDetailScreen'; // Import OrderDetailScreen from new directory
+import OrderDetailScreen from './screens/orderDetail/OrderDetailScreen';
 import AboutUsScreen from './screens/aboutUs/AboutUsScreen';
 import ContactUsScreen from './screens/contactUs/ContactUsScreen';
 import InformationScreen from './screens/information/InformationScreen';
+
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -27,14 +28,13 @@ const OrderStack = () => {
 const ProfileStack = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false }} />
-      <Stack.Screen name="Information" component={InformationScreen} options={{ title: 'Thông tin', headerTitleAlign: 'center',fontSize: 30, }}  />
+      <Stack.Screen name="ProfileScreen" component={ProfileScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="Information" component={InformationScreen} options={{ title: 'Thông tin', headerTitleAlign: 'center', fontSize: 30 }} />
       <Stack.Screen name="AboutUs" component={AboutUsScreen} options={{ title: 'Về chúng tôi' }} />
       <Stack.Screen name="ContactUs" component={ContactUsScreen} options={{ title: 'Contact Us' }} />
     </Stack.Navigator>
   );
 };
-
 
 const MainTabs = () => {
   return (
@@ -54,14 +54,17 @@ const MainTabs = () => {
           return <Image source={iconName} style={{ width: size, height: size }} />;
         },
       })}
-      tabBarOptions={{
-        activeTintColor: 'blue',
-        inactiveTintColor: 'gray',
-      }}
+      // tabBarOptions={{
+      //   activeTintColor: 'blue',
+      //   inactiveTintColor: 'gray',
+      //   style: {
+      //     display: 'flex',
+      //   },
+      // }}
     >
-      <Tab.Screen name="Home" component={HomeScreen} options={{ headerShown: false }}/>
+      <Tab.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
       <Tab.Screen name="Order" component={OrderStack} options={{ headerShown: false }} />
-      <Tab.Screen name="Profile" component={ProfileStack} options={{ headerShown: false }}/>
+      <Tab.Screen name="Profile" component={ProfileStack} options={{ headerShown: false }} />
     </Tab.Navigator>
   );
 };
@@ -71,21 +74,22 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
-          name="MainTabs"
-          component={MainTabs}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
           name="Login"
           component={LoginScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen
+          name="MainTabs"
+          component={MainTabs}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
           name="OrderDetailScreen"
           component={OrderDetailScreen}
           options={{ title: 'Order Detail' }}
         />
-          <Stack.Screen name="AboutUs" component={AboutUsScreen} options={{ title: 'About Us' }}/>
+        <Stack.Screen name="AboutUs" component={AboutUsScreen} options={{ title: 'About Us' }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

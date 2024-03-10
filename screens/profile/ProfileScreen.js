@@ -6,7 +6,7 @@ import Avatar from '../../assets/images/avatar.png'; // Import your avatar image
 import InfoIcon from '../../assets/icons/info.png';
 import AboutUsIcon from '../../assets/icons/aboutus.png';
 import ContactUsIcon from '../../assets/icons/contactus.png';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const ProfileScreen = () => {
   const navigation = useNavigation(); // Initialize navigation hook
 
@@ -39,8 +39,25 @@ const ProfileScreen = () => {
     navigation.navigate('ContactUs'); // Navigate to ContactUsScreen
   };
 
-  const handleInformation = () => {
-    navigation.navigate('Information'); // Navigate to ContactUsScreen
+  // const handleInformation = async() => {
+  //   navigation.navigate('Information') ;
+  //    // Truyền id vào thông qua route.params
+  // };
+
+  const handleInformation = async () => {
+    try {
+      const loginInfoString = await AsyncStorage.getItem('loginInfo');
+      if (loginInfoString !== null) {
+        const loginInfo = JSON.parse(loginInfoString);
+        navigation.navigate('Information', { id: loginInfo.id });
+      } else {
+        // Xử lý trường hợp không tìm thấy thông tin đăng nhập
+        console.log('Không tìm thấy thông tin đăng nhập');
+      }
+    } catch (error) {
+      console.error('Lỗi khi lấy thông tin đăng nhập:', error);
+      throw error;
+    }
   };
 
   return (

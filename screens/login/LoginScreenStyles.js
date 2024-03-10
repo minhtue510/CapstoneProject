@@ -5,8 +5,8 @@ const LoginScreenStyles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff', // Set background color to white
-    paddingBottom: 150, // Adjust padding as needed
+    backgroundColor: '#fff',
+    paddingBottom: 150,
   },
   inputContainer: {
     flexDirection: 'row',
@@ -20,8 +20,8 @@ const LoginScreenStyles = StyleSheet.create({
   },
   icon: {
     marginRight: 10,
-    width: 24, // Set width of the icon
-    height: 24, // Set height of the icon
+    width: 24,
+    height: 24,
   },
   input: {
     flex: 1,
@@ -30,11 +30,9 @@ const LoginScreenStyles = StyleSheet.create({
   passwordToggleContainer: {
     position: 'absolute',
     right: 10,
-    top: 40, // Adjusted top position
+    top: 40,
     zIndex: 999,
   },
-
-  // Style for the password toggle button icon
   toggleIcon: {
     width: 20,
     height: 20,
@@ -44,21 +42,21 @@ const LoginScreenStyles = StyleSheet.create({
     marginTop: 15,
     width: '80%',
     alignItems: 'center',
-    backgroundColor: '#007bff', // Blue color
+    backgroundColor: '#007bff',
     paddingHorizontal: 20,
     paddingVertical: 10,
     borderRadius: 5,
-    elevation: 3, // Shadow on Android
-    shadowColor: '#659bbb', // Shadow color
+    elevation: 3,
+    shadowColor: '#659bbb',
     shadowOffset: {
       width: 0,
       height: 3,
     },
-    shadowOpacity: 0.25, // Shadow opacity
-    shadowRadius: 3.84, // Shadow radius
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
   },
   buttonText: {
-    color: '#fff', // White color
+    color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
   },

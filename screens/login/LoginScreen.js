@@ -3,30 +3,64 @@ import { View, Text, TextInput, Button, Image, TouchableOpacity } from 'react-na
 import logo from '../../assets/images/logo.png';
 import user from '../../assets/icons/user.png';
 import pass from '../../assets/icons/pass.png';
-import showPasswordIcon from '../../assets/icons/show_password.png'; // Import the show password icon
-import hidePasswordIcon from '../../assets/icons/hide_password.png'; // Import the hide password icon
+import showPasswordIcon from '../../assets/icons/show_password.png';
+import hidePasswordIcon from '../../assets/icons/hide_password.png';
 import LoginScreenStyles from './LoginScreenStyles';
+import { loginUser } from '../../api/user';
+import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+const LoginScreen = () => {
+  const navigation = useNavigation(); // Sử dụng hook useNavigation để lấy đối tượng navigation
 
-const LoginScreen = ({ navigation }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [hidePassword, setHidePassword] = useState(true); // State to toggle password visibility
+  const [hidePassword, setHidePassword] = useState(true);
 
-  const handleLogin = () => {
-    // Your login logic here
-    console.log('Logging in with:', username, password);
-    // Example: Navigate to HomeScreen on successful login
-    navigation.navigate('Home');
+  const validatePassword = (password) => {
+    // Kiểm tra độ dài của mật khẩu
+    if (password.length < 8 || password.length > 16) {
+      return false;
+    }
+    // Kiểm tra xem mật khẩu có chứa chữ và số không
+    const containsLetter = /[a-zA-Z]/.test(password);
+    const containsNumber = /[0-9]/.test(password);
+    return containsLetter && containsNumber;
+  };
+  
+  const handleLogin = async () => {
+    try {
+      // Kiểm tra xem tên đăng nhập và mật khẩu có được nhập không
+      if (username.trim() === '' || password.trim() === '') {
+        console.error('Tên đăng nhập và mật khẩu không được để trống.');
+        return;
+      }
+      
+      // Tiếp tục với quá trình đăng nhập
+      const response = await loginUser(username, password);
+      console.log('Đăng nhập thành công:', response);
+      await AsyncStorage.setItem("loginInfo", JSON.stringify(response));
+      console.log("Token and Service saved to AsyncStorage");
+      // Xử lý phản hồi từ server
+      if (response.role === 'Driver') {
+        navigation.navigate('MainTabs');
+      } else {
+        console.error('Tài khoản của bạn không phải tài xế.');
+      }
+    } catch (error) {
+      console.error('Sai tên đăng nhập hoặc mật khẩu:');
+    }
   };
 
+
+  
+
   const togglePasswordVisibility = () => {
-    setHidePassword(!hidePassword); // Toggle the hidePassword state
+    setHidePassword(!hidePassword);
   };
 
   return (
     <View style={LoginScreenStyles.container}>
       <Image source={logo} style={LoginScreenStyles.logo} />
-      {/* Username input with icon */}
       <View style={LoginScreenStyles.inputContainer}>
         <Image source={user} style={LoginScreenStyles.icon} />
         <TextInput
@@ -41,11 +75,10 @@ const LoginScreen = ({ navigation }) => {
         <TextInput
           style={LoginScreenStyles.input}
           placeholder="Password"
-          secureTextEntry={hidePassword} // Set secureTextEntry based on the hidePassword state
+          secureTextEntry={hidePassword}
           value={password}
           onChangeText={setPassword}
         />
-        {/* Toggle button to show/hide password */}
         <TouchableOpacity onPress={togglePasswordVisibility} style={LoginScreenStyles.passwordToggle}>
           <Image source={hidePassword ? showPasswordIcon : hidePasswordIcon} style={LoginScreenStyles.toggleIcon} />
         </TouchableOpacity>
