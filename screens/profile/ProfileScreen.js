@@ -7,51 +7,45 @@ import InfoIcon from '../../assets/icons/info.png';
 import AboutUsIcon from '../../assets/icons/aboutus.png';
 import ContactUsIcon from '../../assets/icons/contactus.png';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Vector from '../../assets/icons/Vector.png'
 const ProfileScreen = () => {
   const navigation = useNavigation(); // Initialize navigation hook
 
   const handleLogout = () => {
-    // Hiển thị popup hỏi người dùng
     Alert.alert(
       'Đăng xuất',
       'Bạn có muốn đăng xuất không?',
       [
         {
           text: 'Không',
-          style: 'cancel', // Màu sắc của nút sẽ là màu hủy bỏ (thường là màu đỏ)
+          style: 'cancel',
         },
         {
           text: 'Có',
           onPress: () => {
-            navigation.navigate('Login'); // Đăng xuất và quay về màn hình login
+            navigation.navigate('Login');
           },
         },
       ],
-      { cancelable: false } // Ngăn người dùng đóng popup bằng cách bấm ra ngoài
+      { cancelable: false }
     );
   };
 
   const handleAboutUs = () => {
-    navigation.navigate('AboutUs'); // Navigate to AboutUsScreen
+    navigation.navigate('AboutUs');
   };
 
   const handleContactUs = () => {
-    navigation.navigate('ContactUs'); // Navigate to ContactUsScreen
+    navigation.navigate('ContactUs');
   };
-
-  // const handleInformation = async() => {
-  //   navigation.navigate('Information') ;
-  //    // Truyền id vào thông qua route.params
-  // };
 
   const handleInformation = async () => {
     try {
       const loginInfoString = await AsyncStorage.getItem('loginInfo');
       if (loginInfoString !== null) {
         const loginInfo = JSON.parse(loginInfoString);
-        navigation.navigate('Information', { id: loginInfo.id });
+        navigation.navigate('Information', { id: loginInfo.accounId });
       } else {
-        // Xử lý trường hợp không tìm thấy thông tin đăng nhập
         console.log('Không tìm thấy thông tin đăng nhập');
       }
     } catch (error) {
@@ -64,17 +58,19 @@ const ProfileScreen = () => {
     <SafeAreaView style={ProfileScreenStyles.container}>
       <StatusBar style="auto" />
       <View style={ProfileScreenStyles.titleContainer}>
-        <Text style={ProfileScreenStyles.title}>Hồ sơ</Text>
+        <Text style={ProfileScreenStyles.title}>Hồ sơ của bạn</Text>
       </View>
       <View style={ProfileScreenStyles.avatarContainer}>
         <Image source={Avatar} style={ProfileScreenStyles.avatar} />
       </View>
       <View style={ProfileScreenStyles.formContainer}>
+      <View style={ProfileScreenStyles.boxContainer}>
         <View style={ProfileScreenStyles.rowContainer}>
           <TouchableOpacity style={ProfileScreenStyles.textButton} onPress={handleInformation}>
             <View style={ProfileScreenStyles.buttonContent}>
               <Image source={InfoIcon} style={ProfileScreenStyles.icon} />
               <Text style={ProfileScreenStyles.buttonText}>Thông tin</Text>
+              <Image source={Vector} style={ProfileScreenStyles.iconVector} />
             </View>
           </TouchableOpacity>
         </View>
@@ -83,6 +79,7 @@ const ProfileScreen = () => {
             <View style={ProfileScreenStyles.buttonContent}>
               <Image source={AboutUsIcon} style={ProfileScreenStyles.icon} />
               <Text style={ProfileScreenStyles.buttonText}>Về chúng tôi</Text>
+              <Image source={Vector} style={ProfileScreenStyles.iconVector} />
             </View>
           </TouchableOpacity>
         </View>
@@ -91,18 +88,18 @@ const ProfileScreen = () => {
             <View style={ProfileScreenStyles.buttonContent}>
               <Image source={ContactUsIcon} style={ProfileScreenStyles.icon} />
               <Text style={ProfileScreenStyles.buttonText}>Liên hệ hỗ trợ</Text>
+              <Image source={Vector} style={ProfileScreenStyles.iconVector} />
             </View>
           </TouchableOpacity>
         </View>
-        <View style={ProfileScreenStyles.rowContainer}>
-          <TouchableOpacity style={ProfileScreenStyles.button} onPress={handleLogout}>
-            <Text style={ProfileScreenStyles.buttonTextLogout}>Đăng xuất</Text>
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity style={ProfileScreenStyles.button} onPress={handleLogout}>
+        <Text style={ProfileScreenStyles.buttonTextLogout}>Đăng xuất</Text>
+      </TouchableOpacity>
       </View>
+      </View>
+      
     </SafeAreaView>
   );
-  
 };
 
 export default ProfileScreen;

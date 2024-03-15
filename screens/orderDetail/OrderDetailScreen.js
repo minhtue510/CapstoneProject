@@ -19,6 +19,15 @@ const OrderDetailScreen = ({ route }) => {
     setOrder(prevOrder => ({ ...prevOrder, status: 'delivered' }));
   };
 
+  const handleChangeToDelivery = () => {
+    // Thực hiện cập nhật trạng thái đơn hàng ở đây
+    // Ví dụ: gọi một hàm hoặc API để cập nhật trạng thái
+    // Sau khi cập nhật thành công, bạn có thể thông báo cho người dùng
+    Alert.alert('Đã nhận đơn hàng thành công');
+    // Cập nhật lại trạng thái của order trong state
+    setOrder(prevOrder => ({ ...prevOrder, status: 'delivering' }));
+  };
+
   const renderOrderItem = ({ item }) => (
     <View style={OrderDetailScreenStyles.listItemContainer}>
       <Text style={OrderDetailScreenStyles.itemName}>Tên hàng: {item.itemName}</Text>
@@ -50,6 +59,13 @@ const OrderDetailScreen = ({ route }) => {
         <TouchableOpacity onPress={handleDeliverySuccess}>
           <View style={OrderDetailScreenStyles.button}>
             <Text style={OrderDetailScreenStyles.buttonText}>Giao thành công</Text>
+          </View>
+        </TouchableOpacity>
+      )}
+       {order.status === 'waiting' && ( // Kiểm tra nếu đơn hàng đang trong trạng thái delivering
+        <TouchableOpacity onPress={handleChangeToDelivery}>
+          <View style={OrderDetailScreenStyles.button}>
+            <Text style={OrderDetailScreenStyles.buttonText}>Bắt đầu giao hàng</Text>
           </View>
         </TouchableOpacity>
       )}

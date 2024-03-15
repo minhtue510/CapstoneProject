@@ -29,25 +29,29 @@ const LoginScreen = () => {
   
   const handleLogin = async () => {
     try {
-      // Kiểm tra xem tên đăng nhập và mật khẩu có được nhập không
+      // Check if the username and password are provided
       if (username.trim() === '' || password.trim() === '') {
         console.error('Tên đăng nhập và mật khẩu không được để trống.');
         return;
       }
       
-      // Tiếp tục với quá trình đăng nhập
+      // Proceed with the login process
       const response = await loginUser(username, password);
       console.log('Đăng nhập thành công:', response);
       await AsyncStorage.setItem("loginInfo", JSON.stringify(response));
       console.log("Token and Service saved to AsyncStorage");
-      // Xử lý phản hồi từ server
+      // Handle response from the server
       if (response.role === 'Driver') {
         navigation.navigate('MainTabs');
       } else {
         console.error('Tài khoản của bạn không phải tài xế.');
       }
     } catch (error) {
-      console.error('Sai tên đăng nhập hoặc mật khẩu:');
+      if (error.response && error.response.status === 401) {
+        console.error('Sai tên đăng nhập hoặc mật khẩu.');
+      } else {
+        console.error('Đã xảy ra lỗi khi đăng nhập:', error.message);
+      }
     }
   };
 
@@ -65,7 +69,7 @@ const LoginScreen = () => {
         <Image source={user} style={LoginScreenStyles.icon} />
         <TextInput
           style={LoginScreenStyles.input}
-          placeholder="Username"
+          placeholder="Tài khoản"
           value={username}
           onChangeText={setUsername}
         />
@@ -74,7 +78,7 @@ const LoginScreen = () => {
         <Image source={pass} style={LoginScreenStyles.icon} />
         <TextInput
           style={LoginScreenStyles.input}
-          placeholder="Password"
+          placeholder="Mật khẩu"
           secureTextEntry={hidePassword}
           value={password}
           onChangeText={setPassword}
@@ -84,7 +88,7 @@ const LoginScreen = () => {
         </TouchableOpacity>
       </View>
       <TouchableOpacity style={LoginScreenStyles.button} onPress={handleLogin}>
-        <Text style={LoginScreenStyles.buttonText}>Login</Text>
+        <Text style={LoginScreenStyles.buttonText}>Đăng nhập</Text>
       </TouchableOpacity>
     </View>
   );

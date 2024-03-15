@@ -14,6 +14,14 @@ const HomeScreen = ({ route }) => {
   const handleOrderPress = (item) => {
     navigation.navigate('OrderDetailScreen', { order: item });
   };
+  
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
 
   const renderNoOrdersComponent = () => (
     <View style={HomeScreenStyles.noOrdersContainer}>
@@ -22,26 +30,133 @@ const HomeScreen = ({ route }) => {
     </View>
   );
 
+  const renderOrderItem = ({ item }) => {
+    let addressDetails = '';
+
+    if (item.locationStreetGet) {
+      addressDetails += item.locationStreetGet;
+    }
+
+    let wardAndDistrict = '';
+    if (item.locationWardGet) {
+      wardAndDistrict += `P. ${item.locationWardGet}`;
+    }
+
+    if (item.locationDistrictGet) {
+      if (wardAndDistrict) {
+        wardAndDistrict += `, Q.${item.locationDistrictGet}`;
+      } else {
+        wardAndDistrict += `Q.${item.locationDistrictGet}`;
+      }
+    }
+
+    let cityAndProvince = '';
+    if (item.locationCityGet) {
+      cityAndProvince += `TP. ${item.locationCityGet}`;
+    }
+
+    if (item.locationProvinceGet) {
+      if (cityAndProvince) {
+        cityAndProvince += `, ${item.locationProvinceGet}`;
+      } else {
+        cityAndProvince += `${item.locationProvinceGet}`;
+      }
+    }
+
+    let deliveryAddressDetails = '';
+
+    if (item.locationStreetDelivery) {
+      deliveryAddressDetails += item.locationStreetDelivery;
+    }
+
+    let deliveryWardAndDistrict = '';
+    if (item.locationWardDelivery) {
+      deliveryWardAndDistrict += `P. ${item.locationWardDelivery}`;
+    }
+
+    if (item.locationDistrictDelivery) {
+      if (deliveryWardAndDistrict) {
+        deliveryWardAndDistrict += `, Q.${item.locationDistrictDelivery}`;
+      } else {
+        deliveryWardAndDistrict += `Q.${item.locationDistrictDelivery}`;
+      }
+    }
+
+    let deliveryCityAndProvince = '';
+    if (item.locationCityDelivery) {
+      deliveryCityAndProvince += `TP. ${item.locationCityDelivery}`;
+    }
+
+    if (item.locationProvinceDelivery) {
+      if (deliveryCityAndProvince) {
+        deliveryCityAndProvince += `, ${item.locationProvinceDelivery}`;
+      } else {
+        deliveryCityAndProvince += ` ${item.locationProvinceDelivery}`;
+      }
+    }
+ 
+return (
+    <TouchableOpacity onPress={() => handleOrderPress(item)}>
+      <View style={HomeScreenStyles.orderContainer}>
+          <View style={HomeScreenStyles.orderIDAndDateContainer}>
+            <Text style={HomeScreenStyles.orderIDContainer}>#{item.orderID}</Text>
+            {/* <Text style={HomeScreenStyles.orderID}>Ngày giao: {formatDate(item.dayDelivery)}</Text> */}
+          </View>
+          <View style={HomeScreenStyles.orderItem}>
+            {/* Cột 1: Thông tin đơn nhận và giao */}
+            <View style={HomeScreenStyles.orderDetails}>
+              {/* Đường kẻ */}
+              <View style={[HomeScreenStyles.deliveryPath]} />
+              {/* Vòng tròn cho việc nhận */}
+              <View style={HomeScreenStyles.circleGet} />
+              {/* Thông tin địa chỉ nhận */}
+              <View>
+                <Text style={HomeScreenStyles.orderDate}>
+                  {addressDetails}
+                </Text>
+                <Text style={HomeScreenStyles.orderDate}>
+                  {wardAndDistrict}
+                </Text>
+                <Text style={HomeScreenStyles.orderDate}>
+                  {cityAndProvince}
+                </Text>
+              </View>
+              <View style={{ height: 40 }} />
+              {/* Đường kẻ */}
+              <View style={[HomeScreenStyles.deliveryPath]} />
+              {/* Vòng tròn cho việc giao */}
+              <View style={HomeScreenStyles.circleDelivery} />
+              {/* Thông tin địa chỉ giao hàng */}
+              <View>
+                <Text style={HomeScreenStyles.orderDate}>
+                  {deliveryAddressDetails}
+                </Text>
+                <Text style={HomeScreenStyles.orderDate}>
+                  {deliveryWardAndDistrict}
+                </Text>
+                <Text style={HomeScreenStyles.orderDate}>
+                  {deliveryCityAndProvince}
+                </Text>
+              </View>
+             
+            </View>
+            <Text style={[HomeScreenStyles.orderStatus, { backgroundColor: item.status === 'delivering' ? 'orange' : (item.status === 'waiting' ? 'gray' : 'transparent') }]}>
+  {item.status === 'delivering' ? 'Đang giao' : (item.status === 'waiting' ? 'Chờ nhận hàng' : '')}
+</Text>
+          </View>
+        </View>
+    </TouchableOpacity>
+  );
+};
+
   return (
     <View style={HomeScreenStyles.container}>
       {deliveringOrders.length > 0 ? (
         <>
-          <Text style={HomeScreenStyles.title}>Đơn hàng đang được giao</Text>
+          <Text style={HomeScreenStyles.title}>Đơn hàng</Text>
           <FlatList
             data={deliveringOrders}
-            renderItem={({ item }) => (
-              <TouchableOpacity onPress={() => handleOrderPress(item)}>
-                <View style={HomeScreenStyles.orderItem}>
-                  <View>
-                    <Text style={HomeScreenStyles.orderDate}>{`Mã đơn: ${item.orderID}`}</Text>
-                    <Text style={HomeScreenStyles.orderDate}>{`Công ty: ${item.companyName}`}</Text>
-                    <Text style={HomeScreenStyles.orderDate}>{`Địa chỉ lấy: ${item.locationDetailGet}`}</Text>
-                    <Text style={HomeScreenStyles.orderDate}>{`Địa chỉ giao: ${item.locationDetailDelivery}`}</Text>
-                  </View>
-                  <Image source={item.status === 'delivering' ? deliveringIcon : successIcon} style={HomeScreenStyles.statusIcon} />
-                </View>
-              </TouchableOpacity>
-            )}
+            renderItem={renderOrderItem}
             keyExtractor={(item) => item.id}
           />
         </>

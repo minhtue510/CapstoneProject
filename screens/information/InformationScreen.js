@@ -11,7 +11,7 @@ const InformationScreen = ({ route }) => {
     const fetchUserInfo = async () => {
       try {
         // Extract user ID from the login response
-        const userId = route.params.id;
+        const userId = route.params?.id;
         console.log('User ID:', userId);
 
         // Call the API to fetch user information based on the user ID
@@ -35,11 +35,9 @@ const InformationScreen = ({ route }) => {
             <Image source={Avatar} style={InformationScreenStyles.avatar} />
           </View> */}
       {userInfos?.map((userInfo) => (
-        <View style={InformationScreenStyles.formContainer}>
+        <View key={userInfo.account.accountId} style={InformationScreenStyles.formContainer}>
           <View style={InformationScreenStyles.avatarContainer}>
-            {/* <Image source={userInfo?.account.img} style={InformationScreenStyles.avatar} /> */}
             <Image source={Avatar} style={InformationScreenStyles.avatar} />
-            
           </View>
           <View style={InformationScreenStyles.rowContainer}>
             <Text style={InformationScreenStyles.label}>Họ và tên:</Text>

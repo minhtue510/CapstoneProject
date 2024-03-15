@@ -54,13 +54,6 @@ const MainTabs = () => {
           return <Image source={iconName} style={{ width: size, height: size }} />;
         },
       })}
-      // tabBarOptions={{
-      //   activeTintColor: 'blue',
-      //   inactiveTintColor: 'gray',
-      //   style: {
-      //     display: 'flex',
-      //   },
-      // }}
     >
       <Tab.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
       <Tab.Screen name="Order" component={OrderStack} options={{ headerShown: false }} />
@@ -73,16 +66,18 @@ const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen
+         <Stack.Screen
           name="Login"
           component={LoginScreen}
           options={{ headerShown: false }}
         />
+        
         <Stack.Screen
           name="MainTabs"
           component={MainTabs}
           options={{ headerShown: false }}
         />
+       
 
         <Stack.Screen
           name="OrderDetailScreen"
