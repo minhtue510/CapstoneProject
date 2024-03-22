@@ -36,7 +36,7 @@ const HomeScreenStyles = StyleSheet.create({
     borderRadius: 5,
     backgroundColor: 'red',
     position: 'absolute',
-    left: 1, // Điểm tròn ở đầu đường kẻ
+    // left: 1, // Điểm tròn ở đầu đường kẻ
     top: 30, // Vị trí bắt đầu của đường kẻ
   },
   circleDelivery: {
@@ -45,19 +45,19 @@ const HomeScreenStyles = StyleSheet.create({
     borderRadius: 5,
     backgroundColor: 'green',
     position: 'absolute',
-    left: 1, // Điểm tròn ở cuối đường kẻ
-    bottom: 30, // Vị trí kết thúc của đường kẻ
+    // left: 1, // Điểm tròn ở cuối đường kẻ
+    // bottom: 30, // Vị trí kết thúc của đường kẻ
   },
-  deliveryPath: {
-    position: 'absolute',
-    backgroundColor: 'blue',
-    width: 1.5,
-    height: 120, // Chiều cao của đường kẻ
-    left: 5,
-    top: 35,
-    bottom: 30,
-    zIndex: -1, // Vị trí của đường kẻ
-  },
+  // deliveryPath: {
+  //   position: 'absolute',
+  //   backgroundColor: 'blue',
+  //   width: 1.5,
+  //   height: 120, // Chiều cao của đường kẻ
+  //   left: 5,
+  //   top: 35,
+  //   bottom: 30,
+  //   zIndex: -1, // Vị trí của đường kẻ
+  // },
   orderDateContainer: {
     flexDirection: 'column', // Dòng mới cho mỗi text
     alignItems: 'flex-start', // Căn trái theo chiều ngang
@@ -67,7 +67,8 @@ const HomeScreenStyles = StyleSheet.create({
   orderDate: {
     fontWeight: 'bold',
     marginBottom: 5,
-    marginLeft: 20, // Khoảng cách giữa chữ và vòng tròn
+    marginLeft: 20,
+    
 
   },
   orderCompany: {

@@ -28,6 +28,7 @@ const LoginScreen = () => {
   };
   
   const handleLogin = async () => {
+ 
     try {
       // Check if the username and password are provided
       if (username.trim() === '' || password.trim() === '') {

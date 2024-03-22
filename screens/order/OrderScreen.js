@@ -1,8 +1,11 @@
-import React, { useEffect } from 'react';
-import { View, Text, FlatList, TouchableOpacity, Image } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, FlatList, TouchableOpacity, Image ,} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import OrderScreenStyles from '../order/OrderScreenStyles';
-
+import { getOrderTripOfDriverId } from '../../api/order';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { SafeAreaView } from 'react-native';
+import { getOrderId } from '../../api/order';
 const orders = [
   {
     id: '0',
@@ -22,8 +25,8 @@ const orders = [
     locationProvinceDelivery: '',
     status: 'delivering',
     items: [
-      { itemName: 'TV', description: 'Thiết bị điện tử', unitPrice: 10, quantityItem: 2, unitWeight: 1, length: 5, width: 3, height: 2 },
-      { itemName: 'Laptop', description: 'Laptop description', unitPrice: 15, quantityItem: 1, unitWeight: 2, length: 6, width: 4, height: 3 }
+      { orderTripId: '12312314', itemName: 'TV', description: 'Thiết bị điện tử', unitPrice: 10, quantityItem: 2, unitWeight: 1, length: 5, width: 3, height: 2 },
+      { orderTripId: '2132131767', itemName: 'Laptop', description: 'Laptop description', unitPrice: 15, quantityItem: 1, unitWeight: 2, length: 6, width: 4, height: 3 }
     ]
   },
   {
@@ -44,8 +47,10 @@ const orders = [
     locationProvinceDelivery: 'Đồng Nai',
     status: 'waiting',
     items: [
-      { itemName: 'TV', description: 'Thiết bị điện tử', unitPrice: 10, quantityItem: 2, unitWeight: 1, length: 5, width: 3, height: 2 },
-      { itemName: 'Laptop', description: 'Laptop description', unitPrice: 15, quantityItem: 1, unitWeight: 2, length: 6, width: 4, height: 3 }
+      { orderTripId: '912479124', itemName: 'TV', description: 'Thiết bị điện tử', unitPrice: 10, quantityItem: 3, unitWeight: 1, length: 5, width: 3, height: 2 },
+      { orderTripId: '023123314', itemName: 'Laptop', description: 'Laptop description', unitPrice: 15, quantityItem: 2, unitWeight: 2, length: 6, width: 4, height: 3 },
+      { orderTripId: '912479124', itemName: 'Tủ Lạnh', description: 'Máy lạnh cho không gian lớn', unitPrice: 25, quantityItem: 1, unitWeight: 3, length: 7, width: 4, height: 5 },
+      { orderTripId: '912479124', itemName: 'Máy', description: 'Thiết bị điện tử', unitPrice: 10, quantityItem: 2, unitWeight: 2, length: 5, width: 3, height: 2 },
     ]
   },
   {
@@ -66,8 +71,9 @@ const orders = [
     locationProvinceDelivery: '',
     status: 'success',
     items: [
-      { itemName: 'Product A', description: 'Description of Product A', unitPrice: 10, quantityItem: 2, unitWeight: 1, length: 5, width: 3, height: 2 },
-      { itemName: 'Product B', description: 'Description of Product B', unitPrice: 20, quantityItem: 3, unitWeight: 1.5, length: 7, width: 4, height: 2 }
+      { orderTripId: '11212314', itemName: 'Product A', description: 'Description of Product A', unitPrice: 10, quantityItem: 2, unitWeight: 1, length: 5, width: 3, height: 2 },
+
+      { orderTripId: '123213314', itemName: 'Product B', description: 'Description of Product B', unitPrice: 20, quantityItem: 3, unitWeight: 1.5, length: 7, width: 4, height: 2 }
     ]
   },
   {
@@ -88,9 +94,9 @@ const orders = [
     locationProvinceDelivery: '',
     status: 'success',
     items: [
-      { itemName: 'Product A', description: 'Description of Product A', unitPrice: 10, quantityItem: 2, unitWeight: 1, length: 5, width: 3, height: 2 },
-      { itemName: 'Product B', description: 'Description of Product B', unitPrice: 20, quantityItem: 3, unitWeight: 1.5, length: 7, width: 4, height: 2 },
-      { itemName: 'Product C', description: 'Description of Product B', unitPrice: 20, quantityItem: 3, unitWeight: 1.5, length: 7, width: 4, height: 2 }
+      { orderTripId: '513123314', itemName: 'Product A', description: 'Description of Product A', unitPrice: 10, quantityItem: 2, unitWeight: 1, length: 5, width: 3, height: 2 },
+      { orderTripId: '612312314', itemName: 'Product B', description: 'Description of Product B', unitPrice: 20, quantityItem: 3, unitWeight: 1.5, length: 7, width: 4, height: 2 },
+      { orderTripId: '112457314', itemName: 'Product C', description: 'Description of Product B', unitPrice: 20, quantityItem: 3, unitWeight: 1.5, length: 7, width: 4, height: 2 }
     ]
   },
   {
@@ -111,9 +117,9 @@ const orders = [
     locationProvinceDelivery: '',
     status: 'success',
     items: [
-      { itemName: 'Product A', description: 'Description of Product A', unitPrice: 10, quantityItem: 2, unitWeight: 1, length: 5, width: 3, height: 2 },
-      { itemName: 'Product B', description: 'Description of Product B', unitPrice: 20, quantityItem: 3, unitWeight: 1.5, length: 7, width: 4, height: 2 },
-      { itemName: 'Product C', description: 'Description of Product B', unitPrice: 20, quantityItem: 3, unitWeight: 1.5, length: 7, width: 4, height: 2 }
+      { orderTripId: '64213123', itemName: 'Product A', description: 'Description of Product A', unitPrice: 10, quantityItem: 2, unitWeight: 1, length: 5, width: 3, height: 2 },
+      { orderTripId: '1257314', itemName: 'Product B', description: 'Description of Product B', unitPrice: 20, quantityItem: 3, unitWeight: 1.5, length: 7, width: 4, height: 2 },
+      { orderTripId: '6432123', itemName: 'Product C', description: 'Description of Product B', unitPrice: 20, quantityItem: 3, unitWeight: 1.5, length: 7, width: 4, height: 2 }
     ]
   },
   // Add more orders as needed
@@ -122,7 +128,7 @@ const orders = [
 
 const OrderScreen = () => {
   const navigation = useNavigation();
-
+  const [orderTripId, setOrderTripId] = useState();
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const day = date.getDate();
@@ -131,6 +137,28 @@ const OrderScreen = () => {
     return `${day}/${month}/${year}`;
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const loginInfoString = await AsyncStorage.getItem('loginInfo'); // Await the AsyncStorage.getItem() call
+        if (loginInfoString !== null) {
+          const loginInfo = JSON.parse(loginInfoString);
+          console.log(loginInfo.idByRole);
+          const tripId = await getOrderTripOfDriverId(loginInfo.idByRole); // Await the getOrderTripIdByDriverId() call
+          setOrderTripId(tripId);
+          console.log('Order Trip ID:', tripId); // Log the retrieved tripId
+        } else {
+          console.log('Không có thông tin');
+        }
+      } catch (error) {
+        console.error('Lỗi khi lấy thông tin đăng nhập:', error);
+        throw error;
+      }
+    };
+  
+    fetchData(); // Call fetchData function
+  }, []);
+  
   const renderOrderItem = ({ item }) => {
     let addressDetails = '';
 
@@ -200,10 +228,10 @@ const OrderScreen = () => {
 
 
     return (
-      <TouchableOpacity onPress={() => navigation.navigate('OrderDetailScreen', { order: item })}>
+      <TouchableOpacity onPress={() => navigation.navigate('OrderDetailScreen', { orderId: orderTripId.orderId })}>
         <View style={OrderScreenStyles.orderContainer}>
           <View style={OrderScreenStyles.orderIDAndDateContainer}>
-            <Text style={OrderScreenStyles.orderIDContainer}>#{item.orderID}</Text>
+          <Text style={OrderScreenStyles.orderIDContainer}>#{orderTripId && orderTripId.tripId}</Text>
             <Text style={OrderScreenStyles.orderID}>Ngày giao: {formatDate(item.dayDelivery)}</Text>
           </View>
           <View style={OrderScreenStyles.orderItem}>
@@ -242,17 +270,16 @@ const OrderScreen = () => {
                   {deliveryCityAndProvince}
                 </Text>
               </View>
-             
+
             </View>
-             <Text style={OrderScreenStyles.orderStatus}>
-                {item.status === 'success' ? 'Giao thành công' : ''}
-              </Text>
+            <Text style={OrderScreenStyles.orderStatus}>
+              {item.status === 'success' ? 'Giao thành công' : ''}
+            </Text>
           </View>
         </View>
       </TouchableOpacity>
     );
   };
-
 
 
   useEffect(() => {
@@ -265,7 +292,7 @@ const OrderScreen = () => {
 
 
   return (
-    <View style={OrderScreenStyles.container}>
+    <SafeAreaView style={OrderScreenStyles.container}>
       <Text style={OrderScreenStyles.title}>Lịch sử giao hàng</Text>
       {orders.filter(order => order.status === 'success').length > 0 ? (
         <FlatList
@@ -276,7 +303,7 @@ const OrderScreen = () => {
       ) : (
         <Text style={OrderScreenStyles.noOrderText}>Không có đơn hàng nào được tìm thấy.</Text>
       )}
-    </View>
+    </SafeAreaView>
   );
 };
 

@@ -30,9 +30,9 @@ export const getUserInfo = async () => {
 };
 
 // Hàm đăng nhập và lưu trữ accessToken
-export const loginUser = async (username, password) => {
+export const loginUser = async (username, password, driverId) => {
     try {
-        const response = await api.post('/Login', { username, password });
+        const response = await api.post('/Login', { username, password, driverId});
         const accessToken = response.data.accessToken;
         await storeAccessToken(accessToken);
         return response.data;

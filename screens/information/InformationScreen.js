@@ -2,31 +2,36 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, SafeAreaView, StatusBar, Image } from 'react-native';
 import InformationScreenStyles from './InformationScreenStyles'; // Import styles
 import Avatar from '../../assets/images/avatar.png';
-import { getUserByAccountId, getUserById } from '../../api/user';
+import { getUserByAccountId } from '../../api/user';
+import { useNavigation } from '@react-navigation/native';
 
 const InformationScreen = ({ route }) => {
   const [userInfos, setUserInfos] = useState([]);
-
+  const navigation = useNavigation();
   useEffect(() => {
     const fetchUserInfo = async () => {
-      try {
-        // Extract user ID from the login response
-        const userId = route.params?.id;
-        console.log('User ID:', userId);
+        try {
+            // Extract user ID from the login response
+            const userId = route.params?.id;
+            console.log('User ID:', userId);
 
-        // Call the API to fetch user information based on the user ID
-        const userData = await getUserByAccountId(userId);
-        console.log('User Data:', userData);
+            // Call the API to fetch user information based on the user ID
+            const userData = await getUserByAccountId(userId);
+            console.log('User Data:', userData);
 
-        // Update the userInfo state with the fetched user data
-        setUserInfos(userData);
-      } catch (error) {
-        console.error('Error fetching user info:', error);
-      }
+            // Update the userInfo state with the fetched user data
+            setUserInfos(userData);
+
+            // After fetching user data, automatically navigate to OrderScreen
+            
+        } catch (error) {
+            console.error('Error fetching user info:', error);
+        }
     };
 
     fetchUserInfo();
-  }, [route.params]);
+}, [route.params]);
+ 
 
   return (
     <SafeAreaView style={InformationScreenStyles.container}>
@@ -37,7 +42,7 @@ const InformationScreen = ({ route }) => {
       {userInfos?.map((userInfo) => (
         <View key={userInfo.account.accountId} style={InformationScreenStyles.formContainer}>
           <View style={InformationScreenStyles.avatarContainer}>
-            <Image source={Avatar} style={InformationScreenStyles.avatar} />
+            <Image style={InformationScreenStyles.avatar} />{userInfo?.account.avatar}
           </View>
           <View style={InformationScreenStyles.rowContainer}>
             <Text style={InformationScreenStyles.label}>Họ và tên:</Text>
@@ -59,6 +64,7 @@ const InformationScreen = ({ route }) => {
             <Text style={InformationScreenStyles.label}>Số giấy phép:</Text>
             <Text style={InformationScreenStyles.value}>{userInfo?.licenseNumber}</Text>
           </View>
+          
         </View>
       ))}
     </SafeAreaView>

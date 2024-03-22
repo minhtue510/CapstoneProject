@@ -55,9 +55,9 @@ const MainTabs = () => {
         },
       })}
     >
-      <Tab.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
-      <Tab.Screen name="Order" component={OrderStack} options={{ headerShown: false }} />
-      <Tab.Screen name="Profile" component={ProfileStack} options={{ headerShown: false }} />
+      <Tab.Screen name="Home" component={HomeScreen} options={{title: 'Đơn hàng', headerShown: false }} />
+      <Tab.Screen name="Order" component={OrderStack} options={{title: 'Lịch sử', headerShown: false }} />
+      <Tab.Screen name="Profile" component={ProfileStack} options={{title: 'Hồ sơ', headerShown: false }} />
     </Tab.Navigator>
   );
 };
@@ -77,8 +77,7 @@ const App = () => {
           component={MainTabs}
           options={{ headerShown: false }}
         />
-       
-
+      
         <Stack.Screen
           name="OrderDetailScreen"
           component={OrderDetailScreen}

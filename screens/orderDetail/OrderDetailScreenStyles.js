@@ -66,6 +66,29 @@ const OrderDetailScreenStyles = StyleSheet.create({
     shadowOpacity: 0.25, // Shadow opacity
     shadowRadius: 3.84, // Shadow radius
   },
+  icon: {
+      width: 50,
+      height: 50,
+  },
+  button: {
+    width: 100,
+    height: 50,
+  },
+  orderTripId: {
+    fontWeight: 'bold',
+    marginBottom: 5,
+  },
+  itemContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 5,
+  },
+  itemText: {
+    marginBottom: 5,
+    marginLeft: 10,
+  },
+  
 });
+
 
 export default OrderDetailScreenStyles;
