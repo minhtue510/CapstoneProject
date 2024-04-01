@@ -12,102 +12,94 @@ const OrderScreenStyles = StyleSheet.create({
     marginBottom: 20,
     textAlign: 'center',
   },
-  orderContainer: {
+  tripContainer: {
     marginBottom: 20,
     padding: 10,
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 5,
   },
-  orderItem: {
-    flexDirection: 'row',
-    alignItems: 'flex-start', // Căn chỉnh các phần tử theo chiều dọc
-    position: 'relative',
-  },
+  tripInfoContainer: {
+    flexDirection: 'row', // Display tripId and licensePlate horizontally
+    alignItems: 'center', // Align items vertically in the row
+    marginBottom: 10,
+    marginTop: 10,
 
-  orderDetails: {
-    flex: 1,
-    marginLeft: 10,
-    alignItems: 'flex-start',
+    justifyContent: 'space-between',
+    
   },
-  circleGet: {
-    width: 10,
-    height: 10,
-    borderRadius: 5,
-    backgroundColor: 'red',
-    position: 'absolute',
-    left: 1, // Điểm tròn ở đầu đường kẻ
-    top: 30, // Vị trí bắt đầu của đường kẻ
-  },
-  circleDelivery: {
-    width: 10,
-    height: 10,
-    borderRadius: 5,
-    backgroundColor: 'green',
-    position: 'absolute',
-    left: 1, // Điểm tròn ở cuối đường kẻ
-    bottom: 30, // Vị trí kết thúc của đường kẻ
-  },
-  deliveryPath: {
-    position: 'absolute',
-    backgroundColor: 'blue',
-    width: 1.5,
-    height: 120, // Chiều cao của đường kẻ
-    left: 5,
-    top: 35,
-    bottom: 30,
-    zIndex: -1, // Vị trí của đường kẻ
-  },
-  orderDateContainer: {
-    flexDirection: 'column', // Dòng mới cho mỗi text
-    alignItems: 'flex-start', // Căn trái theo chiều ngang
-    marginLeft: 30, // Khoảng cách với vòng tròn
-
-  },
-  orderDate: {
-    fontWeight: 'bold',
-    marginBottom: 5,
-    marginLeft: 20, // Khoảng cách giữa chữ và vòng tròn
-
-  },
-  orderCompany: {
-    fontStyle: 'italic',
-  },
-
-  // Style cho text địa chỉ
-  addressText: {
-    alignSelf: 'center', // Căn giữa theo chiều ngang
-    marginLeft: 15, // Khoảng cách giữa text và vòng tròn
-  },
-  // Thêm style cho cột mã đơn
   orderIDContainer: {
-    alignItems: 'flex-end',
-    marginBottom: 20,
+    flexDirection: 'row', // Display orderIDContainer and orderID horizontally
+    alignItems: 'center', // Align items vertically in the row
+    marginBottom: 10,
     fontWeight: 'bold',
-    marginLeft: 10,
-    // Căn chỉnh phần tử con về phía cuối bên phải
+    fontSize: 16,
+    marginTop: 15,
+
+    
+  },
+  tripId: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginRight: 10,
+  },
+  licensePlate: {
+    fontSize: 18,
+    fontWeight: 'bold',
+
+    
+  },
+  orderID: {
+    // marginLeft: 10, // Add some spacing between orderIDContainer and orderID
+    marginBottom: 10,
+    marginRight: 10,
+    fontSize: 14,
+    // marginTop: 10,
+
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  button: {
+    fontSize: 16,
+    // fontWeight: 'bold',
+    padding: 10,
+    borderRadius: 5,
+    textAlign: 'center',
+    alignSelf: 'flex-end', // Align button to the right
+    marginTop: 10,
+  },
+  buttonText: {
+    color: '#4cff00', // Đặt màu chữ thành trắng
+    textAlign: 'center', // Căn giữa văn bản
+    fontWeight: 'bold', // Đặt kiểu chữ in đậm
   },
 
-  orderID: {
-    alignItems: 'flex-end',
-    marginBottom: 20,
+  tripType: {
+    fontSize: 16,
+    padding: 5,
+    borderRadius: 5,
+    textAlign: 'center',
+    marginTop: 10,
+    borderWidth: 1, 
+    
   },
-  // Thêm style cho container chứa cả orderID và ngày giao hàng
-  orderIDAndDateContainer: {
-    flexDirection: 'row', // Xếp theo chiều ngang
-    justifyContent: 'space-between', // Canh đều các phần tử con theo chiều ngang
-    alignItems: 'center', // Căn chỉnh các phần tử con theo trục ngang
+  noOrdersContainer: {
+    flex: 1,
+    justifyContent: 'center', // Căn giữa theo chiều dọc
+    alignItems: 'center', // Căn giữa theo chiều ngang
   },
-  orderStatus: {
-    fontSize: 15,
-    color: 'white',
-    backgroundColor: 'green',
-    fontStyle: 'italic',
-    marginTop: 5,
-    padding: 5, // Thêm padding để làm cho phần tử trở nên rộng hơn
-    borderRadius: 5, // Bo tròn viền của phần tử
-    alignSelf: 'flex-end', // Khoảng cách với các phần khác
+  parcelIcon: {
+    width: 100,
+    height: 100,
+    marginBottom: 20, // Khoảng cách giữa hình ảnh và văn bản
   },
+  noOrdersText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center', // Căn giữa văn bản
+},
 });
 
 export default OrderScreenStyles;

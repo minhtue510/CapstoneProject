@@ -6,6 +6,20 @@ const OrderDetailScreenStyles = StyleSheet.create({
     padding: 20,
     backgroundColor: '#f9f9f9', // Friendly background color
   },
+  containerCamera: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 'auto',
+  },
+  buttonContainer: {
+    backgroundColor: '#fff',
+    alignSelf: 'flex-end'
+  },
+  preview: {
+    alignSelf: 'stretch',
+    flex: 1
+  },
   section: {
     marginBottom: 20,
   },

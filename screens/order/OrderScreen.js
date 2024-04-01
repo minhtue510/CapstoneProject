@@ -6,6 +6,7 @@ import { getOrderTripOfDriverId } from '../../api/order';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { SafeAreaView } from 'react-native';
 import { getOrderId } from '../../api/order';
+import parcelIcon from '../../assets/icons/parcel.png'
 
 
 
@@ -22,7 +23,7 @@ const OrderScreen = () => {
   };
   const handleOrderPress = async (tripId) => {
     try {
-      navigation.navigate('OrderDetailScreen', { tripId });
+      navigation.navigate('OrderDetailScreen', { orderTripId: tripId });
     } catch (error) {
       console.error('Lỗi khi chuyển trang chi tiết đơn hàng:', error);
     }
@@ -60,25 +61,69 @@ const OrderScreen = () => {
     }
     return returnData;
   }, [trip])
-  return (
+
+ return (
     <View style={OrderScreenStyles.container}>
-      <Text style={OrderScreenStyles.title}>Lịch sử đơn hàng</Text>
-      <TouchableOpacity onPress={() => handleOrderPress(trip)}>  
-      {trip ? (<View style={OrderScreenStyles.orderContainer}>
-        <Text style={OrderScreenStyles.orderIDContainer}>Mã chuyến đi: {trip.tripId}</Text>
-
-        {/* <Text  style={HomeScreenStyles.orderDetails}>Mã Đơn: {trip.tripId}</Text> */}
-        {trip.orderTripId.map((e) => (
-          <View>
-            <Text key={e} style={OrderScreenStyles.orderIDContainer}>Mã Đơn: {e}</Text>
+      <Text style={OrderScreenStyles.title}>Đơn hàng</Text>
+      {!trip ? (
+        <View style={OrderScreenStyles.noOrdersContainer}>
+          <Image source={parcelIcon} style={OrderScreenStyles.parcelIcon} />
+          <Text style={OrderScreenStyles.noOrdersText}>Bạn không có đơn hàng nào cần giao</Text>
+        </View>
+      ) : (
+        <View style={OrderScreenStyles.tripContainer}>
+          <View style={OrderScreenStyles.tripInfoContainer}>
+            <Text style={OrderScreenStyles.tripId}>Mã chuyến đi: {trip.tripId}</Text>
+            <Text style={OrderScreenStyles.licensePlate}>Xe: {trip.licensePlate}</Text>
           </View>
-        ))}
-        {}
-
-      </View>
-
-      ) : (<></>)}
-        </TouchableOpacity>
+          {trip.orderTripId.map((e, index) => (
+            <TouchableOpacity key={e} onPress={() => handleOrderPress(e)}>
+              <View>
+                <Text style={OrderScreenStyles.orderIDContainer}>Mã Đơn: {e}</Text>
+                <Text style={OrderScreenStyles.orderID}>
+                  Địa chỉ: {trip.tripType === 1 ? trip.locationDetailGet : trip.locationDetailDelivery[index]}
+                </Text>
+              </View>
+            </TouchableOpacity>
+          ))}
+          <View style={OrderScreenStyles.buttonContainer}>
+            <Text
+              style={[OrderScreenStyles.tripType, {
+                color: '#d4380d',
+                backgroundColor: '#fff2e8',
+                borderColor: '#ffbb96',
+                borderWidth: 1,
+              }]}
+            >
+              {trip.tripType === 1 ? 'Loại: Lấy hàng' : 'Loại: Giao hàng'}
+            </Text>
+            {trip && (
+  <TouchableOpacity
+    onPress={() => {
+      if (trip.statusTrip !== 4) {
+        handleStartTrip(trip.tripId);
+      }
+    }}
+    disabled={trip.statusTrip === 4}
+    style={[
+      OrderScreenStyles.tripType,
+      {
+        backgroundColor: trip.statusTrip === 4 ? '#f6ffed' : '#f6ffed',
+        color: '#389e0d',
+        backgroundColor: '#f6ffed',
+        borderColor: '#b7eb8f',
+        borderWidth: 1,
+      }
+    ]}
+  >
+    <Text style={OrderScreenStyles.buttonText}>
+      {trip.statusTrip === 4 ? 'Đã hoàn thành' : 'Bắt đầu đơn hàng'}
+    </Text>
+  </TouchableOpacity>
+)}
+          </View>
+        </View>
+      )}
     </View>
   );
 };

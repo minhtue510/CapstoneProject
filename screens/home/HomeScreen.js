@@ -48,7 +48,7 @@ const HomeScreen = ({ route }) => {
         if (loginInfoString !== null) {
           const loginInfo = JSON.parse(loginInfoString);
           console.log('Driver Id: ', loginInfo.idByRole);
-          const trip = await getOrderTripOfIdleDriverId(loginInfo.idByRole);
+          const trip = await getOrderTripOfIdleDriverId(loginInfo.idByRole,2);
           setTrip(trip);
           console.log('Order Trip :', trip);
         } else {
@@ -63,26 +63,26 @@ const HomeScreen = ({ route }) => {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const loginInfoString = await AsyncStorage.getItem('loginInfo');
-        if (loginInfoString !== null) {
-          const loginInfo = JSON.parse(loginInfoString);
-          console.log('Driver Id: ', loginInfo.idByRole);
-          const trip = await getOrderTripOfDriverId(loginInfo.idByRole, 3);
-          setTrip(trip);
-          console.log('Order Trip :', trip);
-        } else {
-          console.log('Không có thông tin');
-        }
-      } catch (error) {
-        // console.error('Lỗi khi lấy thông tin đăng nhập:', error);
-        throw error;
-      }
-    };
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const loginInfoString = await AsyncStorage.getItem('loginInfo');
+  //       if (loginInfoString !== null) {
+  //         const loginInfo = JSON.parse(loginInfoString);
+  //         console.log('Driver Id: ', loginInfo.idByRole);
+  //         const trip = await getOrderTripOfDriverId(loginInfo.idByRole, 3);
+  //         setTrip(trip);
+  //         console.log('Order Trip :', trip);
+  //       } else {
+  //         console.log('Không có thông tin');
+  //       }
+  //     } catch (error) {
+  //       // console.error('Lỗi khi lấy thông tin đăng nhập:', error);
+  //       throw error;
+  //     }
+  //   };
+  //   fetchData();
+  // }, []);
 
 
 
@@ -118,6 +118,11 @@ const HomeScreen = ({ route }) => {
       const respone = await startOrderTrip(id);
       if (respone) {
         setLogTrip('Đơn hàng đang được giao');
+        // Cập nhật lại trạng thái của chuyến hàng
+        setTrip(prevTrip => ({
+          ...prevTrip,
+          statusTrip: 3 // Giả sử 3 là trạng thái "Đang giao hàng"
+        }));
       }
       console.log('Chuyến hàng bắt đầu');
       // Refresh the data or perform any other actions after starting/completing the trip
@@ -170,26 +175,30 @@ const HomeScreen = ({ route }) => {
             >
               {trip.tripType === 1 ? 'Loại: Lấy hàng' : 'Loại: Giao hàng'}
             </Text>
-            <TouchableOpacity
-              onPress={() => {
-                if (trip.statusTrip !== 3) {
-                  handleStartTrip(trip.tripId);
-                }
-              }}
-              disabled={trip.statusTrip === 3} // Vô hiệu hóa nút khi status là 3
-              style={[HomeScreenStyles.tripType,
-              {
-                backgroundColor: trip.statusTrip === 3 ? '#f6ffed' : '#f6ffed',
-                color: '#389e0d',
-                backgroundColor: '#f6ffed',
-                borderColor: '#b7eb8f',
-                borderWidth: 1,
-              }
-              ]}>
-              <Text style={HomeScreenStyles.buttonText}>
-                {trip.statusTrip === 3 ? 'Đang giao hàng' : 'Bắt đầu đơn hàng'}
-              </Text>
-            </TouchableOpacity>
+            {trip && (
+  <TouchableOpacity
+    onPress={() => {
+      if (trip.statusTrip !== 3) {
+        handleStartTrip(trip.tripId);
+      }
+    }}
+    disabled={trip.statusTrip === 3}
+    style={[
+      HomeScreenStyles.tripType,
+      {
+        backgroundColor: trip.statusTrip === 3 ? '#f6ffed' : '#f6ffed',
+        color: '#389e0d',
+        backgroundColor: '#f6ffed',
+        borderColor: '#b7eb8f',
+        borderWidth: 1,
+      }
+    ]}
+  >
+    <Text style={HomeScreenStyles.buttonText}>
+      {trip.statusTrip === 3 ? 'Đang giao hàng' : 'Bắt đầu đơn hàng'}
+    </Text>
+  </TouchableOpacity>
+)}
           </View>
         </View>
       )}
