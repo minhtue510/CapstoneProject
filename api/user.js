@@ -51,3 +51,38 @@ export const getUserByAccountId = async (accountId) => {
     throw new Error('Error fetching user info:', error);
   }
 };
+
+export const uploadImage = async (accountId, imageFile) => {
+    try {
+      const formData = new FormData();
+      formData.append('image', imageFile);
+  
+      const response = await api.put(`/Accounts/api/accounts/upload-image=${accountId}`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+  
+      return response.data;
+    } catch (error) {
+      console.error('Error starting order trip:', error);
+      throw error;
+    }
+  };
+
+
+  const updatePhoneNumber = async (accountId, newPhoneNumber) => {
+    try {
+      // Send PUT request to update phone number
+      const response = await axios.put(`/Accounts/${accountId}/phone`, {
+        phone: newPhoneNumber
+      });
+  
+      // Return the updated user data
+      return response.data;
+    } catch (error) {
+      // Handle errors
+      console.error('Error updating phone number:', error);
+      throw error;
+    }
+  };

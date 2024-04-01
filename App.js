@@ -13,6 +13,7 @@ import AboutUsScreen from './screens/aboutUs/AboutUsScreen';
 import ContactUsScreen from './screens/contactUs/ContactUsScreen';
 import InformationScreen from './screens/information/InformationScreen';
 
+
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 

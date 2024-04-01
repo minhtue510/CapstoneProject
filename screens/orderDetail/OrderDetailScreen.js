@@ -1,85 +1,154 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, TouchableOpacity, Alert } from 'react-native';
 import OrderDetailScreenStyles from './OrderDetailScreenStyles'; // Import styles
-import { getOrderId } from '../../api/order';
+import { completeOderTrip, getItemOderTrip } from '../../api/order';
+import { Camera } from 'expo-camera';
 // import AsyncStorage from '@react-native-async-storage/async-storage';
 const OrderDetailScreen = ({ route }) => {
-  const { orderId } = route.params;
+  const { orderTripId } = route.params;
+  const [orderInfo, setOrderInfo] = useState([]);
+  const [completeOder, setCompleteOder] = useState();
 
-  
-  const [orderInfo, setOrderInfo] = useState();
 
-  
   useEffect(() => {
     const fetchOrderInfo = async () => {
       try {
-        const orderInfo = await getOrderId(orderId.orderId);
-        setOrderInfo(orderInfo);
+        const itemOrderInfo = await getItemOderTrip(orderTripId);
+        console.log('itemOrderInfo', itemOrderInfo)
+        setOrderInfo(itemOrderInfo);
       } catch (error) {
         console.error('Error fetching order info:', error);
       }
     };
 
     fetchOrderInfo();
-  }, [orderId]);
+  }, [orderTripId]);
 
- 
-  // const handleDeliverySuccess = () => {
-  //   // Thực hiện cập nhật trạng thái đơn hàng ở đây
-  //   // Ví dụ: gọi một hàm hoặc API để cập nhật trạng thái
-  //   // Sau khi cập nhật thành công, bạn có thể thông báo cho người dùng
-  //   Alert.alert('Thành công', 'Đơn hàng đã được giao thành công');
-  //   // Cập nhật lại trạng thái của order trong state
-  //   setOrder(prevOrder => ({ ...prevOrder, status: 'delivered' }));
-  // };
+  useEffect(() => {
+    const fetchOrderInfo = async () => {
+      try {
+        const itemOrderInfo = await getItemOderTrip(orderTripId);
+        setOrderInfo(itemOrderInfo);
+      } catch (error) {
+        console.error('Error fetching order info:', error);
+      }
+    };
 
-  // const handleChangeToDelivery = () => {
-  //   // Thực hiện cập nhật trạng thái đơn hàng ở đây
-  //   // Ví dụ: gọi một hàm hoặc API để cập nhật trạng thái
-  //   // Sau khi cập nhật thành công, bạn có thể thông báo cho người dùng
-  //   Alert.alert('Đã nhận đơn hàng thành công');
-  //   // Cập nhật lại trạng thái của order trong state
-  //   setOrder(prevOrder => ({ ...prevOrder, status: 'delivering' }));
-  // };
+    fetchOrderInfo();
+  }, []);
 
-  const renderOrderItem = ({ item }) => (
-    <View style={OrderDetailScreenStyles.listItemContainer}>
-      <Text style={OrderDetailScreenStyles.orderTripId}>Mã đơn:{orderInfo.orderId}</Text>
-      <View style={OrderDetailScreenStyles.itemContainer}>
-        <Text style={OrderDetailScreenStyles.itemName}>{item.itemName}</Text> 
-        <Text style={OrderDetailScreenStyles.itemText}>Đơn giá: {item.unitPrice}</Text>
-      </View>
-       <Text style={OrderDetailScreenStyles.itemQuantity}>Số lượng: {item.quantityItem}</Text>
-      {/* Thêm các thuộc tính khác nếu cần */}
-    </View>
-  );
-
+  const changeOrderStatus = async () => {
+    try {
+      // Show confirmation popup
+      Alert.alert(
+        'Xác nhận',
+        'Bạn có chắc muốn xác nhận đơn hàng này?',
+        [
+          {
+            text: 'Hủy',
+            onPress: () => console.log('Cancel Pressed'),
+            style: 'cancel',
+          },
+          {
+            text: 'Xác nhận',
+            onPress: async () => {
+              // Call API to complete order
+              const response = await completeOderTrip(orderTripId);
+              console.log(response);
+              // Update orderInfo after completing order
+              const updatedOrderInfo = await getItemOderTrip(orderTripId);
+              setOrderInfo(updatedOrderInfo);
+              // Show success message
+              Alert.alert('Thông báo', 'Đơn hàng đã được xác nhận thành công.');
+            },
+          },
+        ],
+        { cancelable: false }
+      );
+    } catch (error) {
+      console.error('Error completing order:', error);
+    }
+  };
   return (
     <View style={OrderDetailScreenStyles.container}>
       <View style={OrderDetailScreenStyles.section}>
         <Text style={OrderDetailScreenStyles.sectionTitle}>Thông tin đơn hàng</Text>
-        <Text style={OrderDetailScreenStyles.sectionText}>Mã chuyến đi: {orderInfo.orderId}</Text>
-        <Text style={OrderDetailScreenStyles.sectionText}>Ngày lấy: {orderInfo.dayGet}</Text>
-        <Text style={OrderDetailScreenStyles.sectionText}>Ngày giao: {orderInfo.dayDelivery}</Text>
-        <Text style={OrderDetailScreenStyles.sectionText}>Tên công ty: {orderInfo.companyName}</Text>
+        {/* {orderInfo?.map((e) => ( */}
+        <View style={OrderDetailScreenStyles.section}>
+          <Text style={OrderDetailScreenStyles.sectionText}>Mã chuyến đi: {orderTripId?.orderTrip?.tripId} </Text>
+          <Text style={OrderDetailScreenStyles.sectionText}>Mã đơn: {orderTripId?.orderTrip?.orderTripId}</Text>
+          <Text style={OrderDetailScreenStyles.sectionText}>Ngày giao: </Text>
+          <Text style={OrderDetailScreenStyles.sectionText}>Tên công ty: </Text>
+        </View>
+        {/* ))} */}
       </View>
       <View style={OrderDetailScreenStyles.section}>
         <Text style={OrderDetailScreenStyles.sectionTitle}>Chi tiết đơn hàng</Text>
-    </View>
-      {orderInfo.status === 'delivering' && ( // Kiểm tra nếu đơn hàng đang trong trạng thái delivering
-        <TouchableOpacity onPress={handleDeliverySuccess}>
-          <View style={OrderDetailScreenStyles.button}>
-            <Text style={OrderDetailScreenStyles.buttonText}>Giao thành công</Text>
+        {/* {orderInfo?.map((e) => ( */}
+        <View style={OrderDetailScreenStyles.listItemContainer}>
+          <Text style={OrderDetailScreenStyles.itemName}>Mã hàng hóa: {orderTripId?.item?.itemId}</Text>
+          <Text style={OrderDetailScreenStyles.itemName}>Tên hàng hóa: {orderTripId?.item?.itemName}</Text>
+          <View style={OrderDetailScreenStyles.itemContainer}>
+            <Text style={OrderDetailScreenStyles.itemDescription}>Mô tả:  {orderTripId?.item?.description}</Text>
           </View>
-        </TouchableOpacity>
-      )}
-       {orderInfo.status === 'waiting' && ( // Kiểm tra nếu đơn hàng đang trong trạng thái delivering
-        <TouchableOpacity onPress={handleChangeToDelivery}>
-          <View style={OrderDetailScreenStyles.button}>
-            <Text style={OrderDetailScreenStyles.buttonText}>Bắt đầu giao hàng</Text>
-          </View>
-        </TouchableOpacity>
-      )}
+          <Text style={OrderDetailScreenStyles.itemQuantity}>Số lượng: {orderTripId?.item?.quantityItem}</Text>
+          {/* <Text style={OrderDetailScreenStyles}>Đơn giá: </Text> */}
+          {/* Thêm các thuộc tính khác nếu cần */}
+        </View>
+        {/* ))}  */}
+      </View>
+      <TouchableOpacity onPress={() => changeOrderStatus(orderTripId)}>
+        {orderInfo && orderInfo[0]?.orderTrip?.status === 4 ? (
+          <Text
+            style={[
+              OrderDetailScreenStyles.button,
+              {
+                color: '#389e0d',
+                backgroundColor: '#f6ffed',
+                borderColor: '#b7eb8f',
+                borderWidth: 1,
+                fontSize: 18,
+                padding: 10,
+                borderRadius: 5,
+                textAlign: 'center',
+                marginTop: 10,
+                width: '100%',
+              },
+            ]}
+          >
+            Đã giao thành công
+          </Text>
+        ) : (
+          <Text
+            style={[
+              OrderDetailScreenStyles.button,
+              {
+                color: '#389e0d',
+                backgroundColor: '#f6ffed',
+                borderColor: '#b7eb8f',
+                borderWidth: 1,
+                fontSize: 18,
+                padding: 10,
+                borderRadius: 5,
+                textAlign: 'center',
+                marginTop: 10,
+                width: '100%',
+              },
+            ]}
+          >
+            Xác nhận đơn hàng
+          </Text>
+        )}
+      </TouchableOpacity>
+      <TouchableOpacity  style={OrderDetailScreenStyles.button}>
+        <Text>Chụp màn hình</Text>
+      </TouchableOpacity>
+      {/* <Camera
+        style={{ flex: 1 }} // Set appropriate styles for the camera
+        type={Camera.Constants.Type.back} // Set the camera type (front/back)
+        // Add other camera props as needed
+      /> */}
+
     </View>
   );
 };

@@ -30,7 +30,7 @@ const OrderDetailScreenStyles = StyleSheet.create({
   },
   itemName: {
     fontSize: 16,
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
     marginBottom: 5,
   },
   itemDescription: {
@@ -49,22 +49,7 @@ const OrderDetailScreenStyles = StyleSheet.create({
     fontWeight: 'bold',
   },
   button: {
-    marginTop: 15,
-    width: '100%',
-    alignItems: 'center',
-    // backgroundColor: '#007bff', // Blue color
-    backgroundColor: 'green',
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 5,
-    elevation: 3, // Shadow on Android
-    shadowColor: '#659bbb', // Shadow color
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowOpacity: 0.25, // Shadow opacity
-    shadowRadius: 3.84, // Shadow radius
+   
   },
   icon: {
       width: 50,
