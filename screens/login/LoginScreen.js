@@ -43,7 +43,9 @@ const LoginScreen = () => {
       console.log("Token and Service saved to AsyncStorage");
       // Handle response from the server
       if (response.role === 'Driver') {
-        navigation.navigate('MainTabs');
+        // navigation.navigate('MainTabs');
+        navigation.navigate('Menu');
+
       } else {
         console.error('Tài khoản của bạn không phải tài xế.');
       }
@@ -51,7 +53,7 @@ const LoginScreen = () => {
       if (error.response && error.response.status === 401) {
         console.error('Sai tên đăng nhập hoặc mật khẩu.');
       } else {
-        console.error('Đã xảy ra lỗi khi đăng nhập:', error.message);
+        console.error('Sai tên đăng nhập hoặc mật khẩu.');
       }
     }
   };

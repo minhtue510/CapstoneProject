@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useLayoutEffect } from 'react';
 import { View, Text, SafeAreaView, StatusBar, Image, TouchableOpacity } from 'react-native';
 import InformationScreenStyles from './InformationScreenStyles'; // Import styles
 import Avatar from '../../assets/images/avatar.png';
 import { getUserByAccountId } from '../../api/user';
 import { useNavigation } from '@react-navigation/native';
+import back from '../../assets/icons/back.png';
 import { launchImageLibrary } from 'react-native-image-picker';
 import {updatePhoneNumber} from '../../api/user';
 const InformationScreen = ({ route }) => {
@@ -23,6 +24,19 @@ const InformationScreen = ({ route }) => {
     // You can implement this function according to your API logic
     console.log("Update phone number logic here");
   };
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerLeft: () => (
+        <TouchableOpacity onPress={() => navigation.navigate('Profile')} style={InformationScreenStyles.backButton}>
+          <Image source={back} style={InformationScreenStyles.backIcon} />
+        </TouchableOpacity>
+      ),
+      headerStyle: InformationScreenStyles.headerStyle,
+      headerTitleAlign: 'center',  // Center align the title
+      title: 'Thông tin', 
+    });
+  }, [navigation]);
 
   useEffect(() => {
     const fetchUserInfo = async () => {
@@ -87,7 +101,7 @@ const InformationScreen = ({ route }) => {
             </Text>
           </View>
           <View style={InformationScreenStyles.rowContainer}>
-            <Text style={InformationScreenStyles.label}>Phone</Text>
+            <Text style={InformationScreenStyles.label}>Điện thoại</Text>
             <Text style={InformationScreenStyles.value}>{userInfo?.account.phone}</Text>
           </View>
           <View style={InformationScreenStyles.rowContainer}>

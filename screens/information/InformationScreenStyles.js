@@ -38,15 +38,29 @@ const InformationScreenStyles = StyleSheet.create({
     marginBottom: 10,
   },
   label: {
-    flex: 1,
-    fontSize: 16,
+    flex: 2,
+    fontSize: 15,
     fontWeight: 'bold',
     color: '#555', // Medium gray color
   },
   value: {
-    flex: 2,
-    fontSize: 16,
+    flex: 3,
+    fontSize: 14,
     color: '#333', // Dark gray color
+    // marginLeft: 50,
+  },
+  buttonText: {
+    fontSize: 16,
+  },
+  backButton: {
+    marginLeft: 10,
+  },
+  backIcon: {
+    width: 24,
+    height: 24,
+  },
+  headerStyle: {
+    backgroundColor: 'cyan',
   },
 });
 

@@ -1,10 +1,11 @@
-import React from 'react';
+import {React, useLayoutEffect} from 'react';
 import { View, Text, TouchableOpacity, Image, SafeAreaView, StatusBar, Alert } from 'react-native';
 import ProfileScreenStyles from './ProfileScreenStyles'; // Import styles
 import { useNavigation } from '@react-navigation/native'; // Import useNavigation hook
 import Avatar from '../../assets/images/avatar.png'; // Import your avatar image
 import InfoIcon from '../../assets/icons/info.png';
 import AboutUsIcon from '../../assets/icons/aboutus.png';
+import back from '../../assets/icons/back.png';
 import ContactUsIcon from '../../assets/icons/contactus.png';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Vector from '../../assets/icons/Vector.png'
@@ -30,6 +31,18 @@ const ProfileScreen = () => {
       { cancelable: false }
     );
   };
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerLeft: () => (
+        <TouchableOpacity onPress={() => navigation.navigate('Menu')} style={ProfileScreenStyles.backButton}>
+          <Image source={back} style={ProfileScreenStyles.backIcon} />
+        </TouchableOpacity>
+      ),
+      headerStyle: ProfileScreenStyles.headerStyle,
+      headerTitleAlign: 'center',  // Center align the title
+      title: 'Hồ sơ ', 
+    });
+  }, [navigation]);
 
   const handleAboutUs = () => {
     navigation.navigate('AboutUs');
@@ -58,7 +71,7 @@ const ProfileScreen = () => {
     <SafeAreaView style={ProfileScreenStyles.container}>
       <StatusBar style="auto" />
       <View style={ProfileScreenStyles.titleContainer}>
-        <Text style={ProfileScreenStyles.title}>Hồ sơ của bạn</Text>
+        {/* <Text style={ProfileScreenStyles.title}>Hồ sơ của bạn</Text> */}
       </View>
       <View style={ProfileScreenStyles.avatarContainer}>
         <Image source={Avatar} style={ProfileScreenStyles.avatar} />

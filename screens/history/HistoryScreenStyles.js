@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-const OrderDetailScreenStyles = StyleSheet.create({
+const HistoryScreenStyles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
@@ -86,59 +86,6 @@ const OrderDetailScreenStyles = StyleSheet.create({
     marginBottom: 5,
     marginLeft: 10,
   },
-  containerIcon: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    marginBottom: 30,
-  },
-  buttonTakePicture: {
-    marginRight: 10, // Khoảng cách giữa hai nút, có thể điều chỉnh
-  },
-  buttonChooseImage: {
-    marginLeft: 10, // Khoảng cách giữa hai nút, có thể điều chỉnh
-  },
-  image: {
-    width: 50,
-    height: 50,
-    marginLeft: 20, // Khoảng cách giữa biểu tượng và ảnh đã chọn
-  },
-  iconCamera: {
-    width: 30,
-    height: 30,
-  },
-  iconImage: {
-    width: 20,
-    height: 20,
-  },
-  modalContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  },
-  modalContent: {
-    width: '100%',
-    height: '100%',
-    backgroundColor: 'white',
-    borderRadius: 10,
-    overflow: 'hidden',
-  },
-  closeButton: {
-    position: 'absolute',
-    top: 10,
-    right: 10,
-    zIndex: 1,
-  },
-  closeButtonText: {
-    fontSize: 18,
-    color: 'white',
-  },
-  fullImage: {
-    width: '100%',
-    height: '100%',
-    resizeMode: 'cover',
-  },
   buttonText: {
     fontSize: 16,
   },
@@ -152,8 +99,53 @@ const OrderDetailScreenStyles = StyleSheet.create({
   headerStyle: {
     backgroundColor: 'cyan',
   },
-  
+  itemImage: {
+    width: 100,
+    height: 100,
+    resizeMode: 'cover',
+    borderRadius: 8,
+    marginTop: 10,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent: {
+    width: '90%',
+    height: '80%',
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    padding: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  closeButton: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    padding: 10,
+    borderRadius: 50,
+  },
+  closeButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+  },
+  fullImage: {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'contain',
+  },
+  itemImage: {
+    width: 100,
+    height: 100,
+    resizeMode: 'cover',
+    borderRadius: 8,
+    marginTop: 10,
+  },
 });
 
 
-export default OrderDetailScreenStyles;
+export default HistoryScreenStyles;

@@ -37,7 +37,7 @@ export const loginUser = async (username, password, driverId) => {
         await storeAccessToken(accessToken);
         return response.data;
     } catch (error) {
-        throw new Error('Error logging in:', error);
+        // throw new Error('Error logging in:', error);
     }
 };
 
@@ -47,7 +47,7 @@ export const getUserByAccountId = async (accountId) => {
     const response = await api.get(`/Drivers?accountId=${accountId}`);
     return response.data;
   } catch (error) {
-    console.error('Error fetching user info:', error);
+    // console.error('Error fetching user info:', error);
     throw new Error('Error fetching user info:', error);
   }
 };
@@ -86,3 +86,21 @@ export const uploadImage = async (accountId, imageFile) => {
       throw error;
     }
   };
+
+  export const getNotifications = async () => {
+    try {
+        const loginInfo = await AsyncStorage.getItem('loginInfo');
+        if (loginInfo) {
+            const userInfo = JSON.parse(loginInfo);
+            const accountId = userInfo.accounId;
+            const response = await api.get(`/Notification/notification/${accountId}`);
+            return response.data; // Giả sử API trả về một mảng thông báo
+        } else {
+            console.error('Thông tin đăng nhập không tồn tại trong AsyncStorage.');
+            return [];
+        }
+    } catch (error) {
+        console.error('Đã xảy ra lỗi khi lấy thông báo:', error);
+        return [];
+    }
+};

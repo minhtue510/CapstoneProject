@@ -1,4 +1,5 @@
 import api from './api';
+import Reactotron from 'reactotron-react-native';
 
 export const getOrderTripOfDriverId = async (driverId,status) => {
   try {
@@ -6,7 +7,7 @@ export const getOrderTripOfDriverId = async (driverId,status) => {
     const response = await api.get(`/OrderTrip/orderTripOfDriver?driverId=${driverId}&status=${status}`);
     return response.data;
   } catch (error) {
-    console.error('Error fetching order trip info:', error);
+    // console.error('Error fetching order trip info:', error);
     throw error;
   }
 };
@@ -14,10 +15,23 @@ export const getOrderTripOfDriverId = async (driverId,status) => {
 export const getOrderTripOfIdleDriverId = async (driverId) => {
   try {
     // const response = await api.get(`/OrderTrip/orderTripIdleOfDriver?driverId=${driverId}`);
-    const response = await api.get(`/OrderTrip//orderTripIdleOfDriver?driverId=${driverId}`);
+    const response = await api.get(`/OrderTrip/orderTripIdleOfDriver?driverId=${driverId}`);
     return response.data;
   } catch (error) {
-    console.error('Error fetching order trip info:', error);
+    // console.error('Error fetching order trip info:', error);
+    throw error;
+  }
+};
+
+
+export const getHistory = async (driverId) => {
+  try {
+    // const response = await api.get(`/OrderTrip/orderTripIdleOfDriver?driverId=${driverId}`);
+    const response = await api.get(`/OrderTrip/AllorderTripOfDriver?driverId=${driverId}`);
+    console.log('Response data:', response.data); 
+    return response.data;
+  } catch (error) {
+    // console.error('Error fetching order trip info:', error);
     throw error;
   }
 };
@@ -31,6 +45,18 @@ export const getOrderId = async (orderId) => {
     // throw error;
   }
 };
+
+export const getDriverTrips = async (driverId) => {
+  try {
+    const response = await api.get(`/Trips/Driver?driverId=${driverId}`);
+    return response.data
+    .map(trip => trip.tripId);
+  } catch (error) {
+    console.error('Error fetching driver trips:', error);
+    throw error;
+  }
+};
+
 
 export const getItemOderTrip = async (orderTripId) => {
   try {
@@ -61,9 +87,3 @@ export const completeOderTrip = async (orderTripId) => {
     throw error;
   }
 };
-
-
-
-// /Order/order?orderId
-// /OrderTrip?tripId=18
-

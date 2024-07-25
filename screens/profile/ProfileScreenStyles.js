@@ -101,6 +101,19 @@ const ProfileScreenStyles = StyleSheet.create({
     top:3, // Sử dụng chiều cao của nút
     marginLeft: 'auto',
   },
+  buttonText: {
+    fontSize: 16,
+  },
+  backButton: {
+    marginLeft: 10,
+  },
+  backIcon: {
+    width: 24,
+    height: 24,
+  },
+  headerStyle: {
+    backgroundColor: 'cyan',
+  },
 });
 
 export default ProfileScreenStyles;

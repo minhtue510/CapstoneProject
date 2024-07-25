@@ -99,6 +99,20 @@ const HomeScreenStyles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center', // Căn giữa văn bản
 },
+buttonText: {
+  fontSize: 16,
+},
+backButton: {
+  marginLeft: 10,
+},
+backIcon: {
+  width: 24,
+  height: 24,
+},
+headerStyle: {
+  backgroundColor: 'cyan',
+},
+
 });
 
 export default HomeScreenStyles;

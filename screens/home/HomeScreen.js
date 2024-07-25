@@ -1,8 +1,8 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo, useLayoutEffect } from 'react';
 import { View, Text, FlatList, TouchableOpacity, Image, Button } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import HomeScreenStyles from './HomeScreenStyles';
-import successIcon from '../../assets/icons/success.png';
+import back from '../../assets/icons/back.png';
 import deliveringIcon from '../../assets/icons/delivering.png';
 import parcelIcon from '../../assets/icons/parcel.png';
 import { getOrderTripOfDriverId } from '../../api/order';
@@ -48,7 +48,7 @@ const HomeScreen = ({ route }) => {
         if (loginInfoString !== null) {
           const loginInfo = JSON.parse(loginInfoString);
           console.log('Driver Id: ', loginInfo.idByRole);
-          const trip = await getOrderTripOfIdleDriverId(loginInfo.idByRole,2);
+          const trip = await getOrderTripOfIdleDriverId(loginInfo.idByRole, 2);
           setTrip(trip);
           console.log('Order Trip :', trip);
         } else {
@@ -63,55 +63,18 @@ const HomeScreen = ({ route }) => {
     fetchData();
   }, []);
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const loginInfoString = await AsyncStorage.getItem('loginInfo');
-  //       if (loginInfoString !== null) {
-  //         const loginInfo = JSON.parse(loginInfoString);
-  //         console.log('Driver Id: ', loginInfo.idByRole);
-  //         const trip = await getOrderTripOfDriverId(loginInfo.idByRole, 3);
-  //         setTrip(trip);
-  //         console.log('Order Trip :', trip);
-  //       } else {
-  //         console.log('Không có thông tin');
-  //       }
-  //     } catch (error) {
-  //       // console.error('Lỗi khi lấy thông tin đăng nhập:', error);
-  //       throw error;
-  //     }
-  //   };
-  //   fetchData();
-  // }, []);
-
-
-
-
-  // const handleStartOrderTrip = async () => {
-  //   try {
-  //     // Assuming you have the tripId ready
-  //     await startOrderTrip(orderTripId.tripId);
-  //     console.log('Chuyến hàng bắt đầu');
-  //     // Refresh the data or perform any other actions after starting the trip
-  //   } catch (error) {
-  //     console.error('Lỗi khi bắt đầu chuyến hàng:', error);
-  //   }
-  // };
-
-
-
-  // const renderOrderItem = ({ item }) => {
-  //   console.log("Item:", item)
-
-  //   return (
-  //     <TouchableOpacity key={item} onPress={() => handleOrderPress(item)}>
-  //       <View style={HomeScreenStyles.orderContainer}>
-  //         <Text style={HomeScreenStyles.orderIDContainer}>Mã chuyến đi: {item.tripId}</Text>
-  //       </View>
-  //     </TouchableOpacity>
-  //   );
-  // };
-
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerLeft: () => (
+        <TouchableOpacity onPress={() => navigation.goBack()} style={HomeScreenStyles.backButton}>
+          <Image source={back} style={HomeScreenStyles.backIcon} />
+        </TouchableOpacity>
+      ),
+      headerStyle: HomeScreenStyles.headerStyle,
+      headerTitleAlign: 'center',  // Center align the title
+      title: 'Đơn hàng',
+    });
+  }, [navigation]);
 
   const handleStartTrip = async (id) => {
     try {
@@ -142,11 +105,11 @@ const HomeScreen = ({ route }) => {
   }, [trip])
   return (
     <View style={HomeScreenStyles.container}>
-      <Text style={HomeScreenStyles.title}>Đơn hàng</Text>
+      {/* <Text style={HomeScreenStyles.title}>Đơn hàng</Text> */}
       {!trip ? (
         <View style={HomeScreenStyles.noOrdersContainer}>
           <Image source={parcelIcon} style={HomeScreenStyles.parcelIcon} />
-          <Text style={HomeScreenStyles.noOrdersText}>Bạn không có đơn hàng nào cần giao</Text>
+          <Text style={HomeScreenStyles.noOrdersText}>Không có đơn hàng nào cần vận chuyển</Text>
         </View>
       ) : (
         <View style={HomeScreenStyles.tripContainer}>
@@ -157,9 +120,11 @@ const HomeScreen = ({ route }) => {
           {trip.orderTripId.map((e, index) => (
             <TouchableOpacity key={e} onPress={() => handleOrderPress(e)}>
               <View>
-                <Text style={HomeScreenStyles.orderIDContainer}>Mã Đơn: {e}</Text>
+                <Text style={HomeScreenStyles.orderIDContainer}>Mã gói hàng: {e}</Text>
                 <Text style={HomeScreenStyles.orderID}>
-                  Địa chỉ: {trip.tripType === 1 ? trip.locationDetailGet : trip.locationDetailDelivery[index]}
+                  Địa chỉ: {trip.tripType === 1
+                    ? `${trip.locationDetailGet}, ${trip.cityGet}, ${trip.provinceGet}`
+                    : `${trip.locationDetailDelivery[index]}, ${trip.cityDelivery}, ${trip.provinceDelivery}`}
                 </Text>
               </View>
             </TouchableOpacity>
@@ -173,32 +138,32 @@ const HomeScreen = ({ route }) => {
                 borderWidth: 1,
               }]}
             >
-              {trip.tripType === 1 ? 'Loại: Lấy hàng' : 'Loại: Giao hàng'}
+              {trip.tripType === 1 ? 'Lấy hàng' : 'Giao hàng'}
             </Text>
             {trip && (
-  <TouchableOpacity
-    onPress={() => {
-      if (trip.statusTrip !== 3) {
-        handleStartTrip(trip.tripId);
-      }
-    }}
-    disabled={trip.statusTrip === 3}
-    style={[
-      HomeScreenStyles.tripType,
-      {
-        backgroundColor: trip.statusTrip === 3 ? '#f6ffed' : '#f6ffed',
-        color: '#389e0d',
-        backgroundColor: '#f6ffed',
-        borderColor: '#b7eb8f',
-        borderWidth: 1,
-      }
-    ]}
-  >
-    <Text style={HomeScreenStyles.buttonText}>
-      {trip.statusTrip === 3 ? 'Đang giao hàng' : 'Bắt đầu đơn hàng'}
-    </Text>
-  </TouchableOpacity>
-)}
+              <TouchableOpacity
+                onPress={() => {
+                  if (trip.statusTrip !== 3) {
+                    handleStartTrip(trip.tripId);
+                  }
+                }}
+                disabled={trip.statusTrip === 3}
+                style={[
+                  HomeScreenStyles.tripType,
+                  {
+                    backgroundColor: trip.statusTrip === 3 ? '#f6ffed' : '#f6ffed',
+                    color: '#389e0d',
+                    backgroundColor: '#f6ffed',
+                    borderColor: '#b7eb8f',
+                    borderWidth: 1,
+                  }
+                ]}
+              >
+                <Text style={HomeScreenStyles.buttonText}>
+                  {trip.statusTrip === 3 ? 'Đang giao hàng' : 'Bắt đầu đơn hàng'}
+                </Text>
+              </TouchableOpacity>
+            )}
           </View>
         </View>
       )}
@@ -207,5 +172,3 @@ const HomeScreen = ({ route }) => {
 };
 
 export default HomeScreen;
-
-// {"orderTripId": [393,411], "tripId": 65}
