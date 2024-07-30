@@ -26,9 +26,9 @@ const MapScreen = ({ route }) => {
   // Vùng ban đầu của bản đồ
   const INITIAL_REGION = {
     latitude: 10.841306724256917,
-    longitude: 106.81011902985585,
-    latitudeDelta: 0.1,
-    longitudeDelta: 0.1,
+    longitude: 106.71011902985585,
+    latitudeDelta: 0.5,
+    longitudeDelta: 0.5,
   };
 
   return (
@@ -46,7 +46,7 @@ const MapScreen = ({ route }) => {
             coordinate={{ latitude: getLatitude, longitude: getLongitude }}
             title="Điểm nhận"
             description={`${addressGet}, ${provinceGet}, ${cityGet}`}
-            pinColor="green"
+            pinColor="red"
           />
         )}
 

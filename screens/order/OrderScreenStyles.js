@@ -28,6 +28,17 @@ const OrderScreenStyles = StyleSheet.create({
     justifyContent: 'space-between',
     
   },
+  orderContainer: {
+    marginBottom: 10,
+    padding: 5,
+    borderWidth: 1,
+    borderColor: '#e0e0e0',
+    borderRadius: 10,
+    backgroundColor: '#ffffff',
+    shadowColor: '#000',
+ 
+
+  },
   orderIDContainer: {
     flexDirection: 'row', // Display orderIDContainer and orderID horizontally
     alignItems: 'center', // Align items vertically in the row
@@ -35,22 +46,22 @@ const OrderScreenStyles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 16,
     marginTop: 15,
-
-    
-  },
-  tripId: {
-    fontSize: 18,
-    fontWeight: 'bold',
     marginRight: 10,
   },
-  licensePlate: {
-    fontSize: 18,
+  tripId: {
+    fontSize: 16,
     fontWeight: 'bold',
-
-    
+    color: '#d4380d',
+    flex: 1,
+  },
+  licensePlate: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: 'gray',
+    flex: 1,
+    textAlign: 'right',
   },
   orderID: {
-    // marginLeft: 10, // Add some spacing between orderIDContainer and orderID
     marginBottom: 10,
     marginRight: 10,
     fontSize: 14,
@@ -63,7 +74,6 @@ const OrderScreenStyles = StyleSheet.create({
   },
   button: {
     fontSize: 16,
-    // fontWeight: 'bold',
     padding: 10,
     borderRadius: 5,
     textAlign: 'center',
@@ -75,7 +85,14 @@ const OrderScreenStyles = StyleSheet.create({
     textAlign: 'center', // Căn giữa văn bản
     fontWeight: 'bold', // Đặt kiểu chữ in đậm
   },
-
+  detail: {
+    fontWeight: 'normal', // Đặt kiểu chữ in đậm
+  },
+  viewIcon: {
+    width: 20, 
+    height: 20, 
+    marginRight: 10, 
+  },
   tripType: {
     fontSize: 16,
     padding: 5,

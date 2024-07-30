@@ -66,7 +66,7 @@ const NotificationScreen = () => {
         >
             <Text style={styles.notificationId}>Mã chuyến đi: {item.tripId}</Text>
             <Text style={styles.notificationContent}>{item.content}</Text>
-            {/* <Text style={styles.notificationDate}>{new Date(item.createDate).toLocaleString()}</Text> */}
+             <Text style={styles.notificationDate}>{new Date(item.createDate).toLocaleString()}</Text> 
         </TouchableOpacity>
     );
 

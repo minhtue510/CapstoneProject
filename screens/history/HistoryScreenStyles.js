@@ -100,8 +100,8 @@ const HistoryScreenStyles = StyleSheet.create({
     backgroundColor: 'cyan',
   },
   itemImage: {
-    width: 100,
-    height: 100,
+    width: 50,
+    height: 50,
     resizeMode: 'cover',
     borderRadius: 8,
     marginTop: 10,
@@ -138,13 +138,13 @@ const HistoryScreenStyles = StyleSheet.create({
     height: '100%',
     resizeMode: 'contain',
   },
-  itemImage: {
-    width: 100,
-    height: 100,
-    resizeMode: 'cover',
-    borderRadius: 8,
-    marginTop: 10,
-  },
+  // itemImage: {
+  //   width: 100,
+  //   height: 100,
+  //   resizeMode: 'cover',
+  //   borderRadius: 8,
+  //   marginTop: 10,
+  // },
 });
 
 

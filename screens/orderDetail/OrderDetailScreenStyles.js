@@ -21,7 +21,20 @@ const OrderDetailScreenStyles = StyleSheet.create({
     flex: 1
   },
   section: {
-    marginBottom: 20,
+    marginBottom: 10,
+  },
+  mapContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  mapIcon: {
+    width: 20, 
+    height: 20, 
+    marginRight: 10, 
+  },
+  map: {
+    fontSize: 16, 
+    color: '#007bff', 
   },
   sectionTitle: {
     fontSize: 18,
@@ -49,7 +62,7 @@ const OrderDetailScreenStyles = StyleSheet.create({
   },
   itemDescription: {
     fontSize: 14,
-    marginBottom: 5,
+    marginTop: 5,
     color: '#666', // Slightly darker text color for item description
   },
   itemPrice: {

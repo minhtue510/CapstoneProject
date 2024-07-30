@@ -240,14 +240,19 @@ const OrderScreen = () => {
       </View>
       {Array.isArray(item.orderTripId) && item.orderTripId.map((e) => (
         <TouchableOpacity key={e} onPress={() => handleOrderPress(e)}>
-          <View>
+          <View style= {OrderScreenStyles.orderContainer}>
             <Text style={OrderScreenStyles.orderIDContainer}>Mã gói hàng: {e}</Text>
-            <Text style={OrderScreenStyles.orderID}>
+            <Text style={OrderScreenStyles.detail}>Xem chi tiết</Text>
+            {/* <Image
+                    source={require("../../assets/icons/view.png")} // Replace with your map icon path
+                    style={OrderScreenStyles.viewIcon}
+                  /> */}
+          </View>
+                      {/* <Text style={OrderScreenStyles.orderID}>
               Địa chỉ: {item.tripType === 1
                 ? `${item.locationDetailGet}, ${item.cityGet}, ${item.provinceGet}`
                 : `${item.locationDetailDelivery}, ${item.cityDelivery}, ${item.provinceDelivery}`}
-            </Text>
-          </View>
+            </Text> */}
         </TouchableOpacity>
       ))}
       <View style={OrderScreenStyles.buttonContainer}>

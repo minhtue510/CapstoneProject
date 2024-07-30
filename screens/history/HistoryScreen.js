@@ -70,10 +70,10 @@ const HistoryScreen = ({ route }) => {
     <View style={HistoryScreenStyles.listItemContainer}>
       <Text style={HistoryScreenStyles.itemName}>Mã hàng hóa: {item.itemId}</Text>
       <Text style={HistoryScreenStyles.itemName}>Tên hàng hóa: {item?.item.itemName}</Text>
+      <Text style={HistoryScreenStyles.itemName}>Số lượng: {item?.item.quantityItem}</Text>
       <View style={HistoryScreenStyles.itemContainer}>
         <Text style={HistoryScreenStyles.itemDescription}>Mô tả: {item?.item.description}</Text>
       </View>
-      <Text style={HistoryScreenStyles.itemQuantity}>Số lượng: {item?.item.quantityItem}</Text>
       {item?.orderTrip?.evidence && (
         <TouchableOpacity onPress={() => openModal(item.orderTrip.evidence)}>
           <Image source={{ uri: item.orderTrip.evidence }} style={HistoryScreenStyles.itemImage} />
@@ -91,19 +91,19 @@ const HistoryScreen = ({ route }) => {
           orderInfo.itemOrderTripResponse &&
           orderInfo.itemOrderTripResponse.map((e, index) => (
             <View style={HistoryScreenStyles.section} key={index}>
-              <Text style={HistoryScreenStyles.sectionText}>Mã chuyến đi: {e?.orderTrip?.tripId}</Text>
-              <Text style={HistoryScreenStyles.sectionText}>Mã hàng hóa: {e?.orderTrip?.orderTripId}</Text>
+              {/* <Text style={HistoryScreenStyles.sectionText}>Mã chuyến đi: {e?.orderTrip?.tripId}</Text> */}
+              <Text style={HistoryScreenStyles.sectionText}>Mã gói hàng: {e?.orderTrip?.orderTripId}</Text>
               {e.orderTrip?.type === 1 ? (
                 <>
-                  <Text style={HistoryScreenStyles.sectionText}>Tên người nhận: {orderInfo.orderLocation?.getBy}</Text>
-                  <Text style={HistoryScreenStyles.sectionText}>Số điện thoại người nhận: {orderInfo.orderLocation?.getPhone}</Text>
-                  <Text style={HistoryScreenStyles.sectionText}>Địa chỉ người nhận: {orderInfo.orderLocation?.addressGet}</Text>
+                  <Text style={HistoryScreenStyles.sectionText}>Tên người gửi: {orderInfo.orderLocation?.getBy}</Text>
+                  <Text style={HistoryScreenStyles.sectionText}>Số điện thoại: {orderInfo.orderLocation?.getPhone}</Text>
+                  <Text style={HistoryScreenStyles.sectionText}>Địa chỉ: {orderInfo.orderLocation?.addressGet},{orderInfo.orderLocation?.provinceGet} </Text>
                 </>
               ) : (
                 <>
                   <Text style={HistoryScreenStyles.sectionText}>Tên người nhận: {orderInfo.orderLocation?.deliveryTo}</Text>
-                  <Text style={HistoryScreenStyles.sectionText}>Số điện thoại người nhận: {orderInfo.orderLocation?.deliveryPhone}</Text>
-                  <Text style={HistoryScreenStyles.sectionText}>Địa chỉ người nhận: {orderInfo.orderLocation?.addressDelivery}</Text>
+                  <Text style={HistoryScreenStyles.sectionText}>Số điện thoại: {orderInfo.orderLocation?.deliveryPhone}</Text>
+                  <Text style={HistoryScreenStyles.sectionText}>Địa chỉ: {orderInfo.orderLocation?.addressDelivery}, {orderInfo.orderLocation?.cityDelivery}, {orderInfo.orderLocation?.provinceDelivery}</Text>
                 </>
               )}
             </View>

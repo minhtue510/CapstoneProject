@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, Image, TouchableOpacity } from 'react-native';
-import logo from '../../assets/images/logo.png';
+import logo from '../../assets/images/logo.jpg';
 import user from '../../assets/icons/user.png';
 import pass from '../../assets/icons/pass.png';
 import showPasswordIcon from '../../assets/icons/show_password.png';
