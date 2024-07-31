@@ -40,12 +40,12 @@ const OrderScreenStyles = StyleSheet.create({
 
   },
   orderIDContainer: {
-    flexDirection: 'row', // Display orderIDContainer and orderID horizontally
-    alignItems: 'center', // Align items vertically in the row
+    flexDirection: 'row',
+    alignItems: 'center', 
     marginBottom: 10,
     fontWeight: 'bold',
     fontSize: 16,
-    marginTop: 15,
+    marginTop: 5,
     marginRight: 10,
   },
   tripId: {
@@ -130,6 +130,31 @@ backIcon: {
 headerStyle: {
   backgroundColor: 'cyan',
 },
+filterContainer: {
+  flexDirection: 'row',
+  justifyContent: 'space-around',
+  marginVertical: 10,
+  marginBottom: 15,
+},
+filterButton: {
+  paddingVertical: 10,
+  paddingHorizontal: 20,
+  borderRadius: 20,
+  borderWidth: 1,
+  borderColor: '#d9d9d9',
+},
+activeFilterButton: {
+  backgroundColor: '#1890ff',
+  borderColor: '#1890ff',
+},
+filterText: {
+  color: '#fff',
+},
+inactiveFilterText: {
+  color: '#000',
+},
 });
+
+
 
 export default OrderScreenStyles;

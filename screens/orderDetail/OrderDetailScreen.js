@@ -584,7 +584,6 @@ const OrderDetailScreen = ({ route }) => {
                   Mô tả: {e?.item.description}
                 </Text>
               </View>
-
             </View>
           ))}
       </View>

@@ -205,7 +205,7 @@ const App = () => {
         <Stack.Screen
           name="Menu"
           component={MenuScreen}
-          options={{ headerShown: true, title: 'Trang chủ' }}
+          options={{ headerShown: false, title: 'Trang chủ' }}
         />
         <Stack.Screen
           name="Home"

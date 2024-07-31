@@ -143,8 +143,8 @@
 // export default OrderScreen;
 
 
-import React, { useEffect, useState, useMemo, useCallback, useLayoutEffect} from 'react';
-import { View, Text, FlatList, TouchableOpacity, Image, RefreshControl } from 'react-native';
+import React, { useEffect, useState, useMemo, useCallback, useLayoutEffect } from 'react';
+import { View, Text, FlatList, TouchableOpacity, Image, RefreshControl, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import OrderScreenStyles from '../order/OrderScreenStyles';
 import { getHistory } from '../../api/order';
@@ -156,6 +156,7 @@ const OrderScreen = () => {
   const navigation = useNavigation();
   const [trip, setTrip] = useState([]);
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [filter, setFilter] = useState('all');
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -190,18 +191,20 @@ const OrderScreen = () => {
       setIsRefreshing(false);
     }
   }, []);
+
   useLayoutEffect(() => {
-        navigation.setOptions({
-          headerLeft: () => (
-            <TouchableOpacity onPress={() => navigation.navigate('Menu')} style={OrderScreenStyles.backButton}>
-              <Image source={back} style={OrderScreenStyles.backIcon} />
-            </TouchableOpacity>
-          ),
-          headerStyle: OrderScreenStyles.headerStyle,
-          headerTitleAlign: 'center',  // Center align the title
-          title: 'Lịch sử', 
-        });
-      }, [navigation]);
+    navigation.setOptions({
+      headerLeft: () => (
+        <TouchableOpacity onPress={() => navigation.navigate('Menu')} style={OrderScreenStyles.backButton}>
+          <Image source={back} style={OrderScreenStyles.backIcon} />
+        </TouchableOpacity>
+      ),
+      headerStyle: OrderScreenStyles.headerStyle,
+      headerTitleAlign: 'center',
+      title: 'Lịch sử',
+    });
+  }, [navigation]);
+
   useEffect(() => {
     fetchData();
   }, [fetchData]);
@@ -214,8 +217,16 @@ const OrderScreen = () => {
     // Lọc các chuyến đi có statusTrip là 4
     const filtered = trip.filter((item) => item.statusTrip === 4);
 
+    // Áp dụng bộ lọc cho "Lấy hàng" và "Giao hàng"
+    const filteredByType = filtered.filter((item) => {
+      if (filter === 'all') return true;
+      if (filter === 'pickup') return item.tripType === 1;
+      if (filter === 'delivery') return item.tripType === 2;
+      return true;
+    });
+
     // Sắp xếp từ mới nhất đến cũ nhất (theo tripId)
-    const sorted = filtered.sort((a, b) => b.tripId - a.tripId);
+    const sorted = filteredByType.sort((a, b) => b.tripId - a.tripId);
 
     return sorted.map((item) => ({
       orderTripId: Array.isArray(item.orderTripId) ? item.orderTripId : [],
@@ -230,7 +241,7 @@ const OrderScreen = () => {
       statusTrip: item.statusTrip,
       licensePlate: item.licensePlate
     }));
-  }, [trip]);
+  }, [trip, filter]);
 
   const renderItem = ({ item }) => (
     <View key={item.tripId} style={OrderScreenStyles.tripContainer}>
@@ -240,19 +251,10 @@ const OrderScreen = () => {
       </View>
       {Array.isArray(item.orderTripId) && item.orderTripId.map((e) => (
         <TouchableOpacity key={e} onPress={() => handleOrderPress(e)}>
-          <View style= {OrderScreenStyles.orderContainer}>
+          <View style={OrderScreenStyles.orderContainer}>
             <Text style={OrderScreenStyles.orderIDContainer}>Mã gói hàng: {e}</Text>
             <Text style={OrderScreenStyles.detail}>Xem chi tiết</Text>
-            {/* <Image
-                    source={require("../../assets/icons/view.png")} // Replace with your map icon path
-                    style={OrderScreenStyles.viewIcon}
-                  /> */}
           </View>
-                      {/* <Text style={OrderScreenStyles.orderID}>
-              Địa chỉ: {item.tripType === 1
-                ? `${item.locationDetailGet}, ${item.cityGet}, ${item.provinceGet}`
-                : `${item.locationDetailDelivery}, ${item.cityDelivery}, ${item.provinceDelivery}`}
-            </Text> */}
         </TouchableOpacity>
       ))}
       <View style={OrderScreenStyles.buttonContainer}>
@@ -293,6 +295,35 @@ const OrderScreen = () => {
 
   return (
     <View style={OrderScreenStyles.container}>
+      <View style={styles.filterContainer}>
+        <TouchableOpacity
+          onPress={() => setFilter('all')}
+          style={[
+            styles.filterButton,
+            filter === 'all' && styles.activeFilterButton,
+          ]}
+        >
+          <Text style={[styles.filterText, filter !== 'all' && styles.inactiveFilterText]}>Tất cả</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => setFilter('pickup')}
+          style={[
+            styles.filterButton,
+            filter === 'pickup' && styles.activeFilterButton,
+          ]}
+        >
+          <Text style={[styles.filterText, filter !== 'pickup' && styles.inactiveFilterText]}>Lấy hàng</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => setFilter('delivery')}
+          style={[
+            styles.filterButton,
+            filter === 'delivery' && styles.activeFilterButton,
+          ]}
+        >
+          <Text style={[styles.filterText, filter !== 'delivery' && styles.inactiveFilterText]}>Giao hàng</Text>
+        </TouchableOpacity>
+      </View>
       {!filteredAndSortedData.length ? (
         <View style={OrderScreenStyles.noOrdersContainer}>
           <Image source={parcelIcon} style={OrderScreenStyles.parcelIcon} />
@@ -315,5 +346,30 @@ const OrderScreen = () => {
   );
 };
 
-export default OrderScreen;
+const styles = StyleSheet.create({
+  filterContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginVertical: 10,
+    marginBottom: 15,
+  },
+  filterButton: {
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: '#d9d9d9',
+  },
+  activeFilterButton: {
+    backgroundColor: '#1890ff',
+    borderColor: '#1890ff',
+  },
+  filterText: {
+    color: '#fff',
+  },
+  inactiveFilterText: {
+    color: '#000',
+  },
+});
 
+export default OrderScreen;

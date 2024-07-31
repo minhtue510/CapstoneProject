@@ -1,13 +1,12 @@
-import React, { useState, useLayoutEffect } from 'react';
-import { TouchableOpacity, Image, Text, View, SafeAreaView } from 'react-native';
+import React, { useLayoutEffect } from 'react';
+import { TouchableOpacity, Image, Text, View, SafeAreaView, Linking } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import back from '../../assets/icons/back.png';
 import ContactUsScreenStyles from './ContactUsScreenStyles'; // Import styles
+import back from '../../assets/icons/back.png';
+import phoneIcon from '../../assets/icons/phone.png'; // Import phone icon
+import emailIcon from '../../assets/icons/email.png'; // Import email icon
 
 const ContactUsScreen = ({ navigation }) => {
-  // useState should be inside the functional component
-  const [userInfos, setUserInfos] = useState([]);
-
   useLayoutEffect(() => {
     navigation.setOptions({
       headerLeft: () => (
@@ -21,12 +20,30 @@ const ContactUsScreen = ({ navigation }) => {
     });
   }, [navigation]);
 
+  const handlePressPhone = () => {
+    Linking.openURL('tel:0987654321');
+  };
+
+  const handlePressEmail = () => {
+    Linking.openURL('mailto:example@gmail.com');
+  };
+
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={ContactUsScreenStyles.container}>
       <StatusBar style="auto" />
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Contact Us Screen</Text>
-        {/* Add your about us content here */}
+      <View style={ContactUsScreenStyles.content}>
+        <TouchableOpacity onPress={handlePressPhone} style={ContactUsScreenStyles.contactButton}>
+          <View style={ContactUsScreenStyles.contactButtonContent}>
+            <Image source={phoneIcon} style={ContactUsScreenStyles.icon} />
+            <Text style={ContactUsScreenStyles.contactText}>Hotline: 0987654321</Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={handlePressEmail} style={ContactUsScreenStyles.contactButton}>
+          <View style={ContactUsScreenStyles.contactButtonContent}>
+            <Image source={emailIcon} style={ContactUsScreenStyles.icon} />
+            <Text style={ContactUsScreenStyles.contactText}>Email: example@gmail.com</Text>
+          </View>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
