@@ -9,7 +9,7 @@
 // import ProfileScreen from './screens/profile/ProfileScreen';
 // import LoginScreen from './screens/login/LoginScreen';
 // import OrderDetailScreen from './screens/orderDetail/OrderDetailScreen';
-// import AboutUsScreen from './screens/aboutUs/AboutUsScreen';
+// import ChangeInfomationScreen from './screens/ChangeInfomation/ChangeInfomationScreen';
 // import ContactUsScreen from './screens/contactUs/ContactUsScreen';
 // import InformationScreen from './screens/information/InformationScreen';
 // import HistoryScreen from './screens/history/HistoryScreen';
@@ -34,7 +34,7 @@
 //     <Stack.Navigator>
 //       <Stack.Screen name="ProfileScreen" component={ProfileScreen} options={{ headerShown: true }} />
 //       <Stack.Screen name="Information" component={InformationScreen} options={{ title: 'Thông tin', headerTitleAlign: 'center', fontSize: 30 }} />
-//       <Stack.Screen name="AboutUs" component={AboutUsScreen} options={{ title: 'Về chúng tôi' }} />
+//       <Stack.Screen name="ChangeInfomation" component={ChangeInfomationScreen} options={{ title: 'Về chúng tôi' }} />
 //       <Stack.Screen name="ContactUs" component={ContactUsScreen} options={{ title: 'Contact Us' }} />
 //       <Stack.Screen name="Camera" component={CameraScreen} options={{ title: 'Camera' }} />
 //     </Stack.Navigator>
@@ -110,7 +110,7 @@
 //           component={MainTabs}
 //           options={{ headerShown: false }}
 //         />
-      
+
 //        <Stack.Screen
 //           name="OrderDetailScreen"
 //           component={OrderDetailScreen}
@@ -121,7 +121,7 @@
 //           component={HistoryScreen}
 //           options={{ title: 'Order Detail' }}
 //         /> */}
-//         <Stack.Screen name="AboutUs" component={AboutUsScreen} options={{ headerShown: false }}></Stack.Screen>
+//         <Stack.Screen name="ChangeInfomation" component={ChangeInfomationScreen} options={{ headerShown: false }}></Stack.Screen>
 //         <Stack.Screen name="Camera" component={CameraScreen} options={{ headerShown: false }}></Stack.Screen>
 //       </Stack.Navigator>
 //     </NavigationContainer>
@@ -142,13 +142,19 @@ import ProfileScreen from './screens/profile/ProfileScreen';
 import InformationScreen from './screens/information/InformationScreen';
 import LoginScreen from './screens/login/LoginScreen';
 import OrderDetailScreen from './screens/orderDetail/OrderDetailScreen';
-import AboutUsScreen from './screens/aboutUs/AboutUsScreen';
+import ChangeInfomationScreen from './screens/ChangeInfomationScreen/ChangeInfomationScreen';
 import CameraScreen from './screens/camera/CameraScreen';
 import ContactUsScreen from './screens/contactUs/ContactUsScreen';
 import HistoryScreen from './screens/history/HistoryScreen';
 import MapScreen from './screens/map/MapScreen';
 import NotificationScreen from './screens/notification/NotificationScreen';
+import WaitingScreen from './screens/waiting/WaitingScreen';
 import MenuScreen from './screens/Menu/MenuScreen';
+import WaitingDetailScreen from './screens/WaitingDetailScreen/WaitingDetailScreen';
+import ChatScreen from './screens/chat/ChatScreen';
+import StatisticScreen from './screens/statistics/StatisticScreen';
+import FindScreen from './screens/find/FindScreen';
+
 // import messaging from '@react-native-firebase/messaging';
 // import { Alert } from 'react-native';
 const Stack = createStackNavigator();
@@ -232,27 +238,27 @@ const App = () => {
           component={HistoryScreen}
           options={{ title: 'Lịch sử đơn hàng' }}
         />
-          <Stack.Screen
+        <Stack.Screen
           name="Information"
           component={InformationScreen}
           options={{ headerShown: true }}
         />
-         <Stack.Screen
-          name="AboutUs"
-          component={AboutUsScreen}
-          options={{ headerShown: true, title: 'Về chúng tôi' }}
+        <Stack.Screen
+          name="ChangeInfomation"
+          component={ChangeInfomationScreen}
+          options={{ headerShown: true, title: 'Thay đổi thông tin' }}
         />
-         <Stack.Screen
+        <Stack.Screen
           name="ContactUs"
           component={ContactUsScreen}
           options={{ headerShown: true, title: 'Về chúng tôi' }}
         />
-         <Stack.Screen
+        <Stack.Screen
           name="MapScreen"
           component={MapScreen}
           options={{ headerShown: true, title: 'Maps' }}
         />
-          <Stack.Screen
+        <Stack.Screen
           name="Notification"
           component={NotificationScreen}
           options={{ headerShown: true, title: 'Thông báo' }}
@@ -262,6 +268,32 @@ const App = () => {
           component={CameraScreen}
           options={{ headerShown: false }}
         />
+        <Stack.Screen
+          name="Waiting"
+          component={WaitingScreen}
+          options={{ headerShown: true }}
+        />
+        <Stack.Screen
+          name="WaitingDetail"
+          component={WaitingDetailScreen}
+          options={{ headerShown: true }}
+        />
+        <Stack.Screen
+          name="Chat"
+          component={ChatScreen}
+          options={{ headerShown: true }}
+        />
+        <Stack.Screen
+          name="Find"
+          component={FindScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Statistic"
+          component={StatisticScreen}
+          options={{ headerShown: true }}
+        />
+
       </Stack.Navigator>
     </NavigationContainer>
   );

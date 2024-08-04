@@ -52,6 +52,8 @@ export const getUserByAccountId = async (accountId) => {
   }
 };
 
+
+
 export const uploadImage = async (accountId, imageFile) => {
     try {
       const formData = new FormData();
@@ -70,22 +72,6 @@ export const uploadImage = async (accountId, imageFile) => {
     }
   };
 
-
-  const updatePhoneNumber = async (accountId, newPhoneNumber) => {
-    try {
-      // Send PUT request to update phone number
-      const response = await axios.put(`/Accounts/${accountId}/phone`, {
-        phone: newPhoneNumber
-      });
-  
-      // Return the updated user data
-      return response.data;
-    } catch (error) {
-      // Handle errors
-      console.error('Error updating phone number:', error);
-      throw error;
-    }
-  };
 
   export const getNotifications = async () => {
     try {

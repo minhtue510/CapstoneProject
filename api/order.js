@@ -16,6 +16,7 @@ export const getOrderTripOfIdleDriverId = async (driverId) => {
   try {
     // const response = await api.get(`/OrderTrip/orderTripIdleOfDriver?driverId=${driverId}`);
     const response = await api.get(`/OrderTrip/orderTripIdleOfDriver?driverId=${driverId}`);
+    console.log('Response data:', response.data); 
     return response.data;
   } catch (error) {
     // console.error('Error fetching order trip info:', error);

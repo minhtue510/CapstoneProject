@@ -9,22 +9,22 @@ const MenuScreenStyles = StyleSheet.create({
     header: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between', // Đảm bảo các phần tử con căn giữa với khoảng cách đều giữa chúng
+        justifyContent: 'space-between',
         marginBottom: 20,
     },
     avatar: {
-        width: 50,
-        height: 50,
+        width: 70,
+        height: 70,
         borderRadius: 25,
-        marginRight: 10, // Giảm khoảng cách giữa Avatar và FullName
+        marginRight: 10,
         marginTop: 20,
     },
     fullName: {
-        flex: 1, // Đảm bảo FullName mở rộng hết không gian có thể trong header
+        flex: 1,
         fontSize: 20,
         fontWeight: 'bold',
         color: '#343a40',
-        marginLeft: 10, // Để khoảng cách với Avatar
+        marginLeft: 10,
         marginTop: 20,
     },
     noti: {
@@ -35,25 +35,37 @@ const MenuScreenStyles = StyleSheet.create({
     },
     row: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        flexWrap: 'wrap',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+    },
+    boxWrapper: {
+        width: '50%',
+        marginVertical: 10,
+        alignItems: 'center',
     },
     box: {
-        flex: 1,
-        alignItems: 'center',
-        padding: 20,
-        backgroundColor: '#ffffff',
+        width: 80,
+        height: 80,
         borderRadius: 10,
-        shadowColor: '#000',
-        shadowOpacity: 0.1,
-        shadowOffset: { width: 0, height: 5 },
-        shadowRadius: 10,
-        elevation: 5,
-        margin: 10,
+        backgroundColor: '#f0f0f0',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     boxText: {
         fontSize: 18,
         fontWeight: '600',
         color: '#495057',
+        textAlign: 'center',
+        marginTop: 10,
+    },
+    boxCompleteText: {
+        fontSize: 18,
+        fontWeight: '600',
+        color: '#495057',
+        textAlign: 'center',
+        marginTop: 10,
+        
     },
     badge: {
         position: 'absolute',
@@ -74,8 +86,8 @@ const MenuScreenStyles = StyleSheet.create({
     },
     headerStyle: {
         backgroundColor: 'cyan',
-      },
-      notificationBadge: {
+    },
+    notificationBadge: {
         position: 'absolute',
         top: 10,
         right: 0,
@@ -91,6 +103,59 @@ const MenuScreenStyles = StyleSheet.create({
         color: 'white',
         fontWeight: 'bold',
         fontSize: 12,
+    },
+    title: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: '#495057',
+        borderBottomWidth: 2,
+        borderBottomColor: '#495057',
+        paddingBottom: 10,
+        marginBottom: 20,
+    },
+    notiContainer: {
+        overflow: 'hidden',
+        width: '100%',
+        backgroundColor: 'transparent',
+    },
+    notiText: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: 'red',
+    },
+    icon: {
+        width: 40,
+        height: 40,
+    },
+    iconComplete: {
+        width: 40,
+        height: 40,
+        resizeMode: 'contain',
+    },
+    iconWaiting: {
+        width: 40,
+        height: 40,
+        resizeMode: 'contain',
+    },
+    iconDelivering: {
+        width: 40,
+        height: 40,
+        resizeMode: 'contain',
+    },
+    iconStatis: {
+        width: 40,
+        height: 40,
+        resizeMode: 'contain',
+    },
+    iconFind: {
+        width: 40,
+        height: 40,
+        resizeMode: 'contain',
+    },
+    iconChat: {
+        width: 40,
+        height: 40,
+        resizeMode: 'contain',
     },
 });
 

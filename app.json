@@ -31,7 +31,7 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-   "plugins": [
+    "plugins": [
       [
         "expo-camera",
         {
@@ -46,6 +46,11 @@
           "photosPermission": "The app accesses your photos to let you share them with your friends."
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "1a999fe1-2374-41a5-8dce-ba1885d064ec"
+      }
+    }
   }
 }

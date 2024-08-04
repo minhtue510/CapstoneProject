@@ -92,6 +92,7 @@ const HistoryScreen = ({ route }) => {
           orderInfo.itemOrderTripResponse.map((e, index) => (
             <View style={HistoryScreenStyles.section} key={index}>
               {/* <Text style={HistoryScreenStyles.sectionText}>Mã chuyến đi: {e?.orderTrip?.tripId}</Text> */}
+              <Text style={HistoryScreenStyles.sectionText}>Mã gói hàng: {e?.item.orderId}</Text>
               <Text style={HistoryScreenStyles.sectionText}>Mã gói hàng: {e?.orderTrip?.orderTripId}</Text>
               {e.orderTrip?.type === 1 ? (
                 <>
@@ -139,9 +140,9 @@ const HistoryScreen = ({ route }) => {
           style={[
             HistoryScreenStyles.button,
             {
-              color: isOrderDelivered ? '#ccc' : '#389e0d',
+              color: isOrderDelivered ? '#389e0d' : '#389e0d',
               backgroundColor: isOrderDelivered ? '#f0f0f0' : '#f6ffed',
-              borderColor: isOrderDelivered ? '#ddd' : '#b7eb8f',
+              borderColor: isOrderDelivered ? '#b7eb8f' : '#b7eb8f',
               borderWidth: 1,
               fontSize: 18,
               padding: 10,

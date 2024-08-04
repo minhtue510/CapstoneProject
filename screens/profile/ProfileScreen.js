@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native'; // Import useNavigatio
 import Avatar from '../../assets/images/avatar.png'; // Import your avatar image
 import InfoIcon from '../../assets/icons/info.png';
 import AboutUsIcon from '../../assets/icons/aboutus.png';
+import update from '../../assets/icons/update.png';
 import back from '../../assets/icons/back.png';
 import ContactUsIcon from '../../assets/icons/contactus.png';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -44,8 +45,19 @@ const ProfileScreen = () => {
     });
   }, [navigation]);
 
-  const handleAboutUs = () => {
-    navigation.navigate('AboutUs');
+  const handleChange = async () => {
+    try {
+      const loginInfoString = await AsyncStorage.getItem('loginInfo');
+      if (loginInfoString !== null) {
+        const loginInfo = JSON.parse(loginInfoString);
+        navigation.navigate('ChangeInfomation', { id: loginInfo.accounId });
+      } else {
+        console.log('Không tìm thấy thông tin đăng nhập');
+      }
+    } catch (error) {
+      console.error('Lỗi khi lấy thông tin đăng nhập:', error);
+      throw error;
+    }
   };
 
   const handleContactUs = () => {
@@ -88,10 +100,10 @@ const ProfileScreen = () => {
           </TouchableOpacity>
         </View>
         <View style={ProfileScreenStyles.rowContainer}>
-          <TouchableOpacity style={ProfileScreenStyles.textButton} onPress={handleAboutUs}>
+          <TouchableOpacity style={ProfileScreenStyles.textButton} onPress={handleChange}>
             <View style={ProfileScreenStyles.buttonContent}>
-              <Image source={AboutUsIcon} style={ProfileScreenStyles.icon} />
-              <Text style={ProfileScreenStyles.buttonText}>Về chúng tôi</Text>
+              <Image source={update} style={ProfileScreenStyles.icon} />
+              <Text style={ProfileScreenStyles.buttonText}>Thay đổi thông tin</Text>
               <Image source={Vector} style={ProfileScreenStyles.iconVector} />
             </View>
           </TouchableOpacity>

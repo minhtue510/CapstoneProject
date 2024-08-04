@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useLayoutEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { View, Text, SafeAreaView, StatusBar, Image, TouchableOpacity } from 'react-native';
 import InformationScreenStyles from './InformationScreenStyles'; // Import styles
 import Avatar from '../../assets/images/avatar.png';
@@ -6,7 +6,7 @@ import { getUserByAccountId } from '../../api/user';
 import { useNavigation } from '@react-navigation/native';
 import back from '../../assets/icons/back.png';
 import { launchImageLibrary } from 'react-native-image-picker';
-import {updatePhoneNumber} from '../../api/user';
+
 const InformationScreen = ({ route }) => {
   const [userInfos, setUserInfos] = useState([]);
   const navigation = useNavigation();
@@ -20,8 +20,6 @@ const InformationScreen = ({ route }) => {
   };
 
   const updatePhoneNumber = () => {
-    // Function to handle updating phone number
-    // You can implement this function according to your API logic
     console.log("Update phone number logic here");
   };
 
@@ -76,20 +74,17 @@ const InformationScreen = ({ route }) => {
   return (
     <SafeAreaView style={InformationScreenStyles.container}>
       <StatusBar style="auto" />
-      {/* <View style={InformationScreenStyles.avatarContainer}>
-            <Image source={Avatar} style={InformationScreenStyles.avatar} />{userInfo?.account.avatar}
-          </View> */}
       {userInfos?.map((userInfo) => (
         <View key={userInfo.account.accountId} style={InformationScreenStyles.formContainer}>
-          <TouchableOpacity onPress={selectImage}>
+          <View>
             <View style={InformationScreenStyles.avatarContainer}>
               <Image
                 style={{ width: 100, height: 100, borderRadius: 100 }}
-                source={{ uri: userInfo.account.img }}
+                source={{ uri: userInfo.account.img || Avatar }}
               />
-              {/* <Text style={InformationScreenStyles.changeImageText}>Change Image</Text> */}
+              {/* <Text style={InformationScreenStyles.changeImageText}>Đổi ảnh đại diện</Text> */}
             </View>
-          </TouchableOpacity>
+          </View>
           <View style={InformationScreenStyles.rowContainer}>
             <Text style={InformationScreenStyles.label}>Họ và tên</Text>
             <Text style={InformationScreenStyles.value}>{userInfo?.account.fullName}</Text>
@@ -116,7 +111,6 @@ const InformationScreen = ({ route }) => {
             <Text style={InformationScreenStyles.label}>Số CMND</Text>
             <Text style={InformationScreenStyles.value}>{userInfo?.account.citizenId}</Text>
           </View>
-
         </View>
       ))}
     </SafeAreaView>

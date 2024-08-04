@@ -61,7 +61,7 @@ const NotificationScreen = () => {
             style={[styles.notificationItem, item.status === 'unread' ? styles.unreadNotification : styles.readNotification]}
             onPress={() => {
                 markNotificationAsRead(item.notifictionId);
-                navigation.navigate('Home', { id: item.notifictionId });
+                navigation.navigate('Waiting', { id: item.notifictionId });
             }}
         >
             <Text style={styles.notificationId}>Mã chuyến đi: {item.tripId}</Text>

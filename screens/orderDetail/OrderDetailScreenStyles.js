@@ -165,6 +165,48 @@ const OrderDetailScreenStyles = StyleSheet.create({
   headerStyle: {
     backgroundColor: 'cyan',
   },
+  itemImage: {
+    width: 50, // điều chỉnh kích thước hình ảnh
+    height: 50, // điều chỉnh kích thước hình ảnh
+  },
+  itemEvidenceContainer: {
+    marginTop: 10,
+  },
+  itemImage: {
+    width: 50,
+    height: 50,
+  },
+  modalBackground: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalContainer: {
+    width: '80%',
+    height: '80%',
+    backgroundColor: 'white',
+    borderRadius: 10,
+    overflow: 'hidden',
+    alignItems: 'center',
+  },
+  fullImage: {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'contain',
+  },
+  closeButton: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    borderRadius: 15,
+    padding: 10,
+  },
+  closeButtonText: {
+    color: 'white',
+    fontSize: 16,
+  },
   
 });
 

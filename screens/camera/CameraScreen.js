@@ -41,7 +41,7 @@ const CameraScreen = () => {
   }, []);
 
   if (hasCameraPermission === undefined) {
-    return <Text>Requesting permissions...</Text>
+    return <Text>Đang yêu cầu quyền truy cập...</Text>
   } else if (!hasCameraPermission) {
     return <Text>Permission for camera not granted. Please change this in settings.</Text>
   }
