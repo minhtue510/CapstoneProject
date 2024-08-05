@@ -131,8 +131,9 @@ const HomeScreenStyles = StyleSheet.create({
   },
   noOrdersText: {
     fontSize: 18,
-    color: '#333',
+    fontWeight: 'bold',
     textAlign: 'center',
+    color: '#666',
   },
   backButton: {
     marginLeft: 10,
@@ -142,7 +143,7 @@ const HomeScreenStyles = StyleSheet.create({
     height: 24,
   },
   headerStyle: {
-    backgroundColor: 'cyan',
+    backgroundColor: '#89CFF0',
   },
   flatList: {
     flexGrow: 1,

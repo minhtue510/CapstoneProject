@@ -7,7 +7,7 @@ import { getUserByAccountId } from '../../api/user';
 import { useNavigation } from '@react-navigation/native';
 import edit from '../../assets/icons/edit.png';
 import back from '../../assets/icons/back.png';
-import { updateImage, updatePhoneNumber, updateEmail} from '../../api/update'; // Import updateImage function
+import { updateImage, updatePhoneNumber, updateEmail } from '../../api/update'; // Import updateImage function
 
 const ChangeInfomationScreen = ({ route }) => {
   const [userInfos, setUserInfos] = useState([]);
@@ -15,7 +15,9 @@ const ChangeInfomationScreen = ({ route }) => {
   const [imageSelected, setImageSelected] = useState(false); // State to track if an image has been selected
   const navigation = useNavigation();
   const [newPhoneNumber, setNewPhoneNumber] = useState('');
-  const { accountId } = route.params?.id;
+  const [newEmail, setNewEmail] = useState('');
+  const { accountId } = route.params;
+
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const day = date.getDate();
@@ -23,8 +25,6 @@ const ChangeInfomationScreen = ({ route }) => {
     const year = date.getFullYear();
     return `${day < 10 ? '0' + day : day}/${month < 10 ? '0' + month : month}/${year}`;
   };
-
-
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -35,7 +35,7 @@ const ChangeInfomationScreen = ({ route }) => {
       ),
       headerStyle: ChangeInfomationScreenStyles.headerStyle,
       headerTitleAlign: 'center',  // Center align the title
-      title: 'Thông tin', 
+      title: 'Thông tin',
     });
   }, [navigation]);
 
@@ -43,7 +43,7 @@ const ChangeInfomationScreen = ({ route }) => {
     const fetchUserInfo = async () => {
       try {
         // Extract user ID from the login response
-        const userId = route.params?.id;
+        const userId = route.params.id;
         console.log('User ID:', userId);
 
         // Call the API to fetch user information based on the user ID
@@ -52,9 +52,8 @@ const ChangeInfomationScreen = ({ route }) => {
 
         // Update the userInfo state with the fetched user data
         setUserInfos(userData);
-
       } catch (error) {
-        // console.error('Error fetching user info:', error);
+        console.error('Error fetching user info:', error);
       }
     };
 
@@ -78,53 +77,103 @@ const ChangeInfomationScreen = ({ route }) => {
 
   const saveImage = async () => {
     try {
-      const accountId = route.params?.id; 
-      console.log("Account ID:", accountId); 
-      console.log("Image URI:", image); 
-  
+      const accountId = route.params.id;
+      console.log("Account ID:", accountId);
+      console.log("Image URI:", image);
+
       if (image) {
         const response = await updateImage(accountId, image);
         console.log("Upload thành công:", response);
-        setImageSelected(false); 
+        setImageSelected(false);
       }
     } catch (error) {
       console.error("Lỗi khi gửi ảnh lên server:", error);
     }
   };
+
+  const savePhoneNumber = async () => {
+    try {
+      const accountId = route.params.id;
+      const response = await updatePhoneNumber(accountId,newPhoneNumber);
+      console.log('Cập nhật số điện thoại thành công:', response);
+    } catch (error) {
+      if (error.response) {
+        console.error('Lỗi khi cập nhật số điện thoại:', error.response.data);
+      } else if (error.request) {
+        console.error('Không nhận được phản hồi từ server:', error.request);
+      } else {
+        console.error('Lỗi khi thiết lập yêu cầu:', error.message);
+      }
+    }
+  };
+  
+  const saveEmail = async () => {
+    try {
+      const accountId = route.params.id;
+      const response = await updateEmail(accountId, newEmail);
+      console.log('Cập nhật email thành công:', response);
+    } catch (error) {
+      if (error.response) {
+        console.error('Lỗi khi cập nhật email:', error.response.data);
+      } else if (error.request) {
+        console.error('Không nhận được phản hồi từ server:', error.request);
+      } else {
+        console.error('Lỗi khi thiết lập yêu cầu:', error.message);
+      }
+    }
+  };
+
   return (
     <SafeAreaView style={ChangeInfomationScreenStyles.container}>
       <StatusBar style="auto" />
-      {userInfos?.map((userInfo) => (
-        <View key={userInfo.account.accountId} style={ChangeInfomationScreenStyles.formContainer}>
-          <View>
-            <View style={ChangeInfomationScreenStyles.avatarContainer}>
-              <TouchableOpacity onPress={pickImage}>
-                <Image
-                  style={{ width: 100, height: 100, borderRadius: 100 }}
-                  source={{ uri: image || userInfo.account.img || Avatar }}
-                />
-                <Text style={ChangeInfomationScreenStyles.changeImageText}>Đổi ảnh đại diện</Text>
-              </TouchableOpacity>
-              {imageSelected && (
-                <TouchableOpacity onPress={saveImage} style={ChangeInfomationScreenStyles.saveButton}>
-                  <Text style={ChangeInfomationScreenStyles.saveButtonText}>Lưu ảnh</Text>
+      {userInfos?.map((userInfo) => {
+        const imageSource = image || userInfo.account.img || Avatar;
+        const imageUri = typeof imageSource === 'string' ? { uri: imageSource } : imageSource;
+
+        return (
+          <View key={userInfo.account.accountId} style={ChangeInfomationScreenStyles.formContainer}>
+            <View>
+              <View style={ChangeInfomationScreenStyles.avatarContainer}>
+                <TouchableOpacity onPress={pickImage}>
+                  <Image
+                    style={{ width: 100, height: 100, borderRadius: 100 }}
+                    source={imageUri}
+                  />
+                  <Text style={ChangeInfomationScreenStyles.changeImageText}>Đổi ảnh đại diện</Text>
                 </TouchableOpacity>
-              )}
+                {imageSelected && (
+                  <TouchableOpacity onPress={saveImage} style={ChangeInfomationScreenStyles.saveButton}>
+                    <Text style={ChangeInfomationScreenStyles.saveButtonText}>Lưu ảnh</Text>
+                  </TouchableOpacity>
+                )}
+              </View>
+            </View>
+            <View style={ChangeInfomationScreenStyles.rowContainer}>
+              <Text style={ChangeInfomationScreenStyles.label}>Điện thoại</Text>
+              <Text style={ChangeInfomationScreenStyles.text}>{userInfo?.account.phone}</Text>
+
+              <TextInput
+                style={ChangeInfomationScreenStyles.input}
+                onChangeText={(text) => setNewPhoneNumber(text)}
+                value={newPhoneNumber}
+              />
+              <Button title="Cập nhật số điện thoại" onPress={savePhoneNumber} />
+            </View>
+            <View style={ChangeInfomationScreenStyles.rowContainer}>
+              <Text style={ChangeInfomationScreenStyles.label}>Email</Text>
+              <Text style={ChangeInfomationScreenStyles.text}>{userInfo?.account.email}</Text>
+              <TextInput
+                style={ChangeInfomationScreenStyles.input}
+                onChangeText={(text) => setNewEmail(text)}
+                value={newEmail}
+              />
+              <Button title="Cập nhật email" onPress={saveEmail} />
             </View>
           </View>
-          <View style={ChangeInfomationScreenStyles.rowContainer}>
-            <Text style={ChangeInfomationScreenStyles.label}>Điện thoại</Text>
-            <Text style={ChangeInfomationScreenStyles.value}>{userInfo?.account.phone}</Text>
-          </View>
-          <View style={ChangeInfomationScreenStyles.rowContainer}>
-            <Text style={ChangeInfomationScreenStyles.label}>Email</Text>
-            <Text style={ChangeInfomationScreenStyles.value}>{userInfo?.account.email}</Text>
-
-          </View>
-        
-        </View>
-      ))}
+        );
+      })}
     </SafeAreaView>
   );
 };
+
 export default ChangeInfomationScreen;

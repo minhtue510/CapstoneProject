@@ -1,7 +1,4 @@
-// ChangeInfomationScreenStyles.js
-import { StyleSheet } from 'react-native';
-
-const ChangeInfomationScreenStyles = StyleSheet.create({
+const ChangeInfomationScreenStyles = {
   container: {
     flex: 1,
     backgroundColor: '#fff',
@@ -11,65 +8,48 @@ const ChangeInfomationScreenStyles = StyleSheet.create({
   },
   avatarContainer: {
     alignItems: 'center',
+    marginBottom: 20,
   },
   changeImageText: {
+    color: 'blue',
     marginTop: 10,
-    color: '#007BFF',
   },
   saveButton: {
     marginTop: 10,
+    backgroundColor: 'blue',
+    padding: 10,
+    borderRadius: 5,
   },
   saveButtonText: {
-    color: '#007BFF',
+    color: '#fff',
   },
   rowContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
     marginVertical: 10,
   },
   label: {
     fontSize: 16,
     fontWeight: 'bold',
-    flex: 1,
   },
-  value: {
+  text: {
     fontSize: 16,
-    flex: 1,
+    // fontWeight: 'bold',
   },
   input: {
     borderWidth: 1,
-    borderColor: '#ccc',
     padding: 10,
     borderRadius: 5,
     marginVertical: 10,
   },
-  editIcon: {
-    width: 24,
-    height: 24,
-    marginLeft: 10,
-  },
-  headerStyle: {
-    backgroundColor: '#007BFF',
-  },
   backButton: {
-    padding: 10,
+    marginLeft: 10,
   },
   backIcon: {
     width: 24,
     height: 24,
   },
-  input: {
-    borderwidth: 1,
-    padding: 10,
-    borderradius: 5,
-    marginvertical: 10,
+  headerStyle: {
+    backgroundColor: '#89CFF0',
   },
-  
-  editIcon: {
-    width: 24,
-    height: 24,
-    marginLeft: 10,
-  },
-});
+};
 
 export default ChangeInfomationScreenStyles;

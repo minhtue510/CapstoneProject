@@ -135,9 +135,9 @@ const WaitingDetailScreen = ({ route }) => {
         {orderInfo.itemOrderTripResponse &&
           orderInfo.itemOrderTripResponse.map((e, index) => (
             <View style={WaitingDetailScreenStyles.listItemContainer} key={index}>
-              {/* <Text style={WaitingDetailScreenStyles.itemName}>
+              <Text style={WaitingDetailScreenStyles.itemName}>
                 Mã hàng hóa: {e.itemId}
-              </Text> */}
+              </Text>
               <Text style={WaitingDetailScreenStyles.itemName}>
                 Tên hàng hóa: {e?.item.itemName}
               </Text>

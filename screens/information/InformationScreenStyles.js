@@ -137,7 +137,7 @@ const InformationScreenStyles = StyleSheet.create({
     height: 24,
   },
   headerStyle: {
-    backgroundColor: 'cyan',
+    backgroundColor: '#89CFF0',
   },
 });
 

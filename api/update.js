@@ -13,8 +13,9 @@ export const updateImage = async (accountId, image) => {
       name: image.split("/").pop(),
     });
 
-    const response = await api.put(
-      "/Accounts/api/accounts/upload-image=" + accountId,
+    const response = await axios.put(
+      // "/Accounts/api/accounts/upload-image=" + accountId,
+      "https://nhatlocphatexpress.azurewebsites.net/Accounts/api/accounts/upload-image/" + accountId,
     // "/accounts/upload-image=" + accountId,
       
       formData,
@@ -35,22 +36,39 @@ export const updateImage = async (accountId, image) => {
 };
 
 export const updatePhoneNumber = async (accountId, newPhoneNumber) => {
-    try {
-      const response = await api.put(
-        `/Accounts/${accountId}/phone`, // Endpoint phù hợp với ví dụ trên Swagger
-        { phone: newPhoneNumber },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-  
-      console.log("Cập nhật số điện thoại thành công:", response.data);
-      return response.data;
-    } catch (error) {
-      console.error("Lỗi khi cập nhật số điện thoại:", error);
-      throw error;
-    }
-  };
-  
+  try {
+    // Đảm bảo newPhoneNumber được gửi dưới dạng JSON đúng định dạng
+    const response = await axios.put(
+      `https://nhatlocphatexpress.azurewebsites.net/Accounts/${accountId}/phone`,
+      JSON.stringify( newPhoneNumber ), // Chuyển đổi thành JSON
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Lỗi khi cập nhật số điện thoại:', error.response?.data || error.message);
+    throw error;
+  }
+};
+
+
+export const updateEmail = async (accountId, newEmail) => {
+  try {
+    const response = await axios.put(
+      `https://nhatlocphatexpress.azurewebsites.net/Accounts/${accountId}/email`,
+      JSON.stringify( newEmail ),
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Lỗi khi cập nhật email:', error.response?.data || error.message);
+    throw error;
+  }
+};

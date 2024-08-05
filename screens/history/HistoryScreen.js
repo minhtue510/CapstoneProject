@@ -79,6 +79,7 @@ const HistoryScreen = ({ route }) => {
           <Image source={{ uri: item.orderTrip.evidence }} style={HistoryScreenStyles.itemImage} />
         </TouchableOpacity>
       )}
+      
     </View>
   );
 
@@ -92,7 +93,7 @@ const HistoryScreen = ({ route }) => {
           orderInfo.itemOrderTripResponse.map((e, index) => (
             <View style={HistoryScreenStyles.section} key={index}>
               {/* <Text style={HistoryScreenStyles.sectionText}>Mã chuyến đi: {e?.orderTrip?.tripId}</Text> */}
-              <Text style={HistoryScreenStyles.sectionText}>Mã gói hàng: {e?.item.orderId}</Text>
+              <Text style={HistoryScreenStyles.sectionText}>Mã đơn hàng: {e?.item.orderId}</Text>
               <Text style={HistoryScreenStyles.sectionText}>Mã gói hàng: {e?.orderTrip?.orderTripId}</Text>
               {e.orderTrip?.type === 1 ? (
                 <>

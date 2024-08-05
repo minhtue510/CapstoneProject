@@ -110,8 +110,8 @@ const MenuScreenStyles = StyleSheet.create({
         color: '#495057',
         borderBottomWidth: 2,
         borderBottomColor: '#495057',
-        paddingBottom: 10,
-        marginBottom: 20,
+        paddingBottom: 20,
+        marginBottom: 30,
     },
     notiContainer: {
         overflow: 'hidden',

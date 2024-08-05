@@ -19,10 +19,6 @@ const InformationScreen = ({ route }) => {
     return `${day < 10 ? '0' + day : day}/${month < 10 ? '0' + month : month}/${year}`;
   };
 
-  const updatePhoneNumber = () => {
-    console.log("Update phone number logic here");
-  };
-
   useLayoutEffect(() => {
     navigation.setOptions({
       headerLeft: () => (
@@ -49,8 +45,6 @@ const InformationScreen = ({ route }) => {
 
         // Update the userInfo state with the fetched user data
         setUserInfos(userData);
-
-        // After fetching user data, automatically navigate to OrderScreen
 
       } catch (error) {
         console.error('Error fetching user info:', error);
@@ -80,7 +74,7 @@ const InformationScreen = ({ route }) => {
             <View style={InformationScreenStyles.avatarContainer}>
               <Image
                 style={{ width: 100, height: 100, borderRadius: 100 }}
-                source={{ uri: userInfo.account.img || Avatar }}
+                source={userInfo.account.img ? { uri: userInfo.account.img } : Avatar}
               />
               {/* <Text style={InformationScreenStyles.changeImageText}>Đổi ảnh đại diện</Text> */}
             </View>

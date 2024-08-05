@@ -17,7 +17,7 @@ const MenuScreen = () => {
     const navigation = useNavigation();
     const [fullName, setFullName] = useState('');
     const [accountId, setAccountId] = useState('');
-
+    const [avatar, setAvatar] = useState(Avatar);
     const [notificationCount, setNotificationCount] = useState(0);
     const [trip, setTrip] = useState(null);
     const [tripCount, setTripCount] = useState(0);
@@ -50,12 +50,31 @@ const MenuScreen = () => {
         }
     }, []);
 
+    const loadAvatar = useCallback(async () => {
+        try {
+            const loginInfoString = await AsyncStorage.getItem('loginInfo');
+            if (loginInfoString) {
+                const loginInfo = JSON.parse(loginInfoString);
+                if (loginInfo.image) {
+                    setAvatar({ uri: loginInfo.image });
+                } else {
+                    setAvatar(Avatar);
+                }
+            } else {
+                setAvatar(Avatar);
+            }
+        } catch (error) {
+            console.error('Error loading avatar from AsyncStorage:', error);
+            setAvatar(Avatar);
+        }
+    }, []);
+
     useFocusEffect(
         useCallback(() => {
             fetchData();
-        }, [fetchData])
+            loadAvatar();
+        }, [fetchData, loadAvatar])
     );
-
 
 
     useEffect(() => {
@@ -139,14 +158,14 @@ const MenuScreen = () => {
         >
             <View style={MenuScreenStyles.header}>
                 <TouchableOpacity onPress={() => navigation.navigate('Profile', { screen: 'Profile' })}>
-                    <Image source={Avatar} style={MenuScreenStyles.avatar} />
+                    <Image source={avatar} style={MenuScreenStyles.avatar} />
                 </TouchableOpacity>
                 <Text style={MenuScreenStyles.fullName}>{fullName}</Text>
-               
+
 
                 <TouchableOpacity onPress={handleNavigateToNotifications}>
                     <Image source={bell} style={MenuScreenStyles.noti} />
-                    {notificationCount > 0 && (
+                    {notificationCount >= 0 && (
                         <View style={MenuScreenStyles.notificationBadge}>
                             <Text style={MenuScreenStyles.notificationBadgeText}>{notificationCount}</Text>
                         </View>
@@ -164,19 +183,19 @@ const MenuScreen = () => {
                     <TouchableOpacity style={MenuScreenStyles.box} onPress={() => navigation.navigate('Waiting', { screen: 'Waiting' })}>
                         <Image source={waiting} style={MenuScreenStyles.iconWaiting} />
                     </TouchableOpacity>
-                    <Text style={MenuScreenStyles.boxText}>Đơn cần nhận</Text>
+                    <Text style={MenuScreenStyles.boxText}>Cần vận chuyển</Text>
                 </View>
                 <View style={MenuScreenStyles.boxWrapper}>
                     <TouchableOpacity style={MenuScreenStyles.box} onPress={() => navigation.navigate('Home', { screen: 'Home' })}>
                         <Image source={delivering} style={MenuScreenStyles.iconDelivering} />
                     </TouchableOpacity>
-                    <Text style={MenuScreenStyles.boxText}>Đơn đang giao</Text>
+                    <Text style={MenuScreenStyles.boxText}>Đang vận chuyển</Text>
                 </View>
                 <View style={MenuScreenStyles.boxWrapper}>
                     <TouchableOpacity style={MenuScreenStyles.box} onPress={() => navigation.navigate('Order', { screen: 'Order' })}>
                         <Image source={complete} style={MenuScreenStyles.iconComplete} />
                     </TouchableOpacity>
-                    <Text style={MenuScreenStyles.boxText}>Đơn hoàn thành</Text>
+                    <Text style={MenuScreenStyles.boxText}>Đã hoàn thành</Text>
                 </View>
                 <View style={MenuScreenStyles.boxWrapper}>
                     <TouchableOpacity style={MenuScreenStyles.box} onPress={() => navigation.navigate('Statistic', { screen: 'Statistic' })}>
@@ -185,16 +204,16 @@ const MenuScreen = () => {
                     <Text style={MenuScreenStyles.boxText}>Thống kê</Text>
                 </View>
                 <View style={MenuScreenStyles.boxWrapper}>
-                    <TouchableOpacity style={MenuScreenStyles.box} onPress={() => navigation.navigate('Find', { screen: 'Find' })}>
-                        <Image source={find} style={MenuScreenStyles.iconFind} />
-                    </TouchableOpacity>
-                    <Text style={MenuScreenStyles.boxText}>Tìm kiếm</Text>
-                </View>
-                <View style={MenuScreenStyles.boxWrapper}>
                     <TouchableOpacity style={MenuScreenStyles.box} onPress={() => navigation.navigate('Chat', { screen: 'Chat' })}>
                         <Image source={chat} style={MenuScreenStyles.iconChat} />
                     </TouchableOpacity>
                     <Text style={MenuScreenStyles.boxText}>Nhắn tin</Text>
+                </View>
+                <View style={MenuScreenStyles.boxWrapper}>
+                    <TouchableOpacity style={MenuScreenStyles.boxFind} onPress={() => navigation.navigate('Find', { screen: 'Find' })}>
+                        {/* <Image source={find} style={MenuScreenStyles.iconFind} /> */}
+                    </TouchableOpacity>
+                    <Text style={MenuScreenStyles.boxText} />
                 </View>
             </View>
         </ScrollView>

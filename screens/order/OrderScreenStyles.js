@@ -47,6 +47,8 @@ const OrderScreenStyles = StyleSheet.create({
     fontSize: 16,
     marginTop: 5,
     marginRight: 10,
+    marginLeft: 10,
+
   },
   tripId: {
     fontSize: 16,
@@ -86,7 +88,10 @@ const OrderScreenStyles = StyleSheet.create({
     fontWeight: 'bold', // Đặt kiểu chữ in đậm
   },
   detail: {
-    fontWeight: 'normal', // Đặt kiểu chữ in đậm
+    fontSize: 14,
+    color: '#007bff',
+    marginLeft: 10,
+
   },
   viewIcon: {
     width: 20, 
@@ -123,12 +128,15 @@ buttonText: {
 backButton: {
   marginLeft: 10,
 },
+dayComplete: {
+  marginBottom: 10,
+},
 backIcon: {
   width: 24,
   height: 24,
 },
 headerStyle: {
-  backgroundColor: 'cyan',
+  backgroundColor: '#89CFF0',
 },
 filterContainer: {
   flexDirection: 'row',

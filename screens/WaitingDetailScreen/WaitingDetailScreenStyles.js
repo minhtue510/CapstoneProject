@@ -163,7 +163,7 @@ const WaitingDetailScreenStyles = StyleSheet.create({
     height: 24,
   },
   headerStyle: {
-    backgroundColor: 'cyan',
+    backgroundColor: '#89CFF0',
   },
   itemImage: {
     width: 50, // điều chỉnh kích thước hình ảnh

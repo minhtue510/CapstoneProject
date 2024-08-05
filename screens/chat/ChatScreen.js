@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { View, Text, TextInput, TouchableOpacity, FlatList, StyleSheet } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+ 
 const ChatScreen = () => {
     const route = useRoute();
     const { accountId } = route.params;
@@ -69,7 +70,7 @@ const ChatScreen = () => {
                     placeholder="Nhập nội dung..."
                 />
                 <TouchableOpacity onPress={handleSend} style={styles.sendButton}>
-                    <Text style={styles.sendButtonText}>Send</Text>
+                    <Text style={styles.sendButtonText}>Gửi</Text>
                 </TouchableOpacity>
             </View>
         </View>

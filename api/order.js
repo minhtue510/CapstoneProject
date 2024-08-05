@@ -29,7 +29,7 @@ export const getHistory = async (driverId) => {
   try {
     // const response = await api.get(`/OrderTrip/orderTripIdleOfDriver?driverId=${driverId}`);
     const response = await api.get(`/OrderTrip/AllorderTripOfDriver?driverId=${driverId}`);
-    console.log('Response data:', response.data); 
+    console.log('Lịch sử:', response.data); 
     return response.data;
   } catch (error) {
     // console.error('Error fetching order trip info:', error);

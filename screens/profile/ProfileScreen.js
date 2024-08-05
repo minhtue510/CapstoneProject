@@ -1,8 +1,8 @@
-import {React, useLayoutEffect} from 'react';
+import {React, useLayoutEffect, useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, Image, SafeAreaView, StatusBar, Alert } from 'react-native';
 import ProfileScreenStyles from './ProfileScreenStyles'; // Import styles
 import { useNavigation } from '@react-navigation/native'; // Import useNavigation hook
-import Avatar from '../../assets/images/avatar.png'; // Import your avatar image
+import DefaultAvatar  from '../../assets/images/avatar.png'; // Import your avatar image
 import InfoIcon from '../../assets/icons/info.png';
 import AboutUsIcon from '../../assets/icons/aboutus.png';
 import update from '../../assets/icons/update.png';
@@ -12,7 +12,24 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Vector from '../../assets/icons/Vector.png'
 const ProfileScreen = () => {
   const navigation = useNavigation(); // Initialize navigation hook
+  const [avatar, setAvatar] = useState(DefaultAvatar);
+  useEffect(() => {
+    const loadAvatar = async () => {
+      try {
+        const loginInfoString = await AsyncStorage.getItem('loginInfo');
+        if (loginInfoString !== null) {
+          const loginInfo = JSON.parse(loginInfoString);
+          if (loginInfo.image) {
+            setAvatar({ uri: loginInfo.image });
+          }
+        }
+      } catch (error) {
+        console.error('Error loading avatar from AsyncStorage:', error);
+      }
+    };
 
+    loadAvatar();
+  }, []);
   const handleLogout = () => {
     Alert.alert(
       'Đăng xuất',
@@ -78,7 +95,15 @@ const ProfileScreen = () => {
       throw error;
     }
   };
-
+  const getLoginInfo = async () => {
+    try {
+      const loginInfoString = await AsyncStorage.getItem('loginInfo');
+      return loginInfoString ? JSON.parse(loginInfoString) : null;
+    } catch (error) {
+      console.error('Lỗi khi lấy thông tin đăng nhập:', error);
+      throw error;
+    }
+  };
   return (
     <SafeAreaView style={ProfileScreenStyles.container}>
       <StatusBar style="auto" />
@@ -86,7 +111,7 @@ const ProfileScreen = () => {
         {/* <Text style={ProfileScreenStyles.title}>Hồ sơ của bạn</Text> */}
       </View>
       <View style={ProfileScreenStyles.avatarContainer}>
-        <Image source={Avatar} style={ProfileScreenStyles.avatar} />
+        <Image source={avatar} style={ProfileScreenStyles.avatar} />
       </View>
       <View style={ProfileScreenStyles.formContainer}>
       <View style={ProfileScreenStyles.boxContainer}>
