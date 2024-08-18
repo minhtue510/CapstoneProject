@@ -49,7 +49,7 @@ export const updatePhoneNumber = async (accountId, newPhoneNumber) => {
     );
     return response.data;
   } catch (error) {
-    console.error('Lỗi khi cập nhật số điện thoại:', error.response?.data || error.message);
+    // console.error('Lỗi khi cập nhật số điện thoại:', error.response?.data || error.message);
     throw error;
   }
 };
@@ -68,7 +68,7 @@ export const updateEmail = async (accountId, newEmail) => {
     );
     return response.data;
   } catch (error) {
-    console.error('Lỗi khi cập nhật email:', error.response?.data || error.message);
+    // console.error('Lỗi khi cập nhật email:', error.response?.data || error.message);
     throw error;
   }
 };

@@ -70,6 +70,12 @@ const HistoryScreen = ({ route }) => {
     <View style={HistoryScreenStyles.listItemContainer}>
       <Text style={HistoryScreenStyles.itemName}>Mã hàng hóa: {item.itemId}</Text>
       <Text style={HistoryScreenStyles.itemName}>Tên hàng hóa: {item?.item.itemName}</Text>
+      {/* <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+        <Text style={HistoryScreenStyles.itemName}>Dài: {item?.item.length * 100} cm</Text>
+        <Text style={HistoryScreenStyles.itemName}>Rộng: {item?.item.width * 100} cm</Text>
+        <Text style={HistoryScreenStyles.itemName}>Cao: {item?.item.height * 100} cm</Text>
+      </View> */}
+       <Text style={HistoryScreenStyles.itemName}>Kích thước(D x R x C): {item?.item.length * 100} cm x {item?.item.width * 100} cm x {item?.item.height * 100} cm</Text>
       <Text style={HistoryScreenStyles.itemName}>Số lượng: {item?.item.quantityItem}</Text>
       <View style={HistoryScreenStyles.itemContainer}>
         <Text style={HistoryScreenStyles.itemDescription}>Mô tả: {item?.item.description}</Text>
@@ -79,7 +85,7 @@ const HistoryScreen = ({ route }) => {
           <Image source={{ uri: item.orderTrip.evidence }} style={HistoryScreenStyles.itemImage} />
         </TouchableOpacity>
       )}
-      
+
     </View>
   );
 

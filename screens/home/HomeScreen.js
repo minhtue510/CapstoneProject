@@ -105,7 +105,7 @@ const HomeScreen = ({ route }) => {
         {renderData.length === 0 ? (
           <View style={HomeScreenStyles.noOrdersContainer}>
             <Image source={parcelIcon} style={HomeScreenStyles.parcelIcon} />
-            <Text style={HomeScreenStyles.noOrdersText}>Không có đơn hàng nào cần vận chuyển</Text>
+            <Text style={HomeScreenStyles.noOrdersText}>Không có đơn hàng cần vận chuyển</Text>
           </View>
         ) : (
           <View style={HomeScreenStyles.tripContainer}>

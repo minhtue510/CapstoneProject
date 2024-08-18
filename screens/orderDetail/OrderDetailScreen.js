@@ -229,6 +229,9 @@ const OrderDetailScreen = ({ route }) => {
               <Text style={OrderDetailScreenStyles.itemName}>
                 Tên hàng hóa: {e?.item.itemName}
               </Text>
+              <Text style={OrderDetailScreenStyles.itemName}>
+              Kích thước(D x R X C): {e?.item.length * 100} cm x {e?.item.width * 100} cm x {e?.item.height * 100} cm
+              </Text>
               <Text style={OrderDetailScreenStyles.itemQuantity}>
                 Số lượng: {e?.item.quantityItem}
               </Text>

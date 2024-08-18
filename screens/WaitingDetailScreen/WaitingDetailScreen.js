@@ -141,6 +141,12 @@ const WaitingDetailScreen = ({ route }) => {
               <Text style={WaitingDetailScreenStyles.itemName}>
                 Tên hàng hóa: {e?.item.itemName}
               </Text>
+              <Text style={WaitingDetailScreenStyles.itemName}>
+                Kích thước(D x R X C): {e?.item.length * 100} cm x {e?.item.width * 100} cm x {e?.item.height * 100} cm
+              </Text>
+              {/* <Text style={WaitingDetailScreenStyles.itemName}>
+                Trọng lượng: {e?.item.unitWeight} kg
+              </Text> */}
               <Text style={WaitingDetailScreenStyles.itemQuantity}>
                 Số lượng: {e?.item.quantityItem}
               </Text>

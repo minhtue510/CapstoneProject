@@ -165,7 +165,7 @@ const MenuScreen = () => {
 
                 <TouchableOpacity onPress={handleNavigateToNotifications}>
                     <Image source={bell} style={MenuScreenStyles.noti} />
-                    {notificationCount >= 0 && (
+                    {notificationCount > 0 && (
                         <View style={MenuScreenStyles.notificationBadge}>
                             <Text style={MenuScreenStyles.notificationBadgeText}>{notificationCount}</Text>
                         </View>

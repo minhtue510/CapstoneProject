@@ -50,6 +50,21 @@ const ChangeInfomationScreenStyles = {
   headerStyle: {
     backgroundColor: '#89CFF0',
   },
+  errorText: {
+    color: 'red',
+    fontSize: 14,
+    marginTop: 10,
+  },
+  successText: {
+    color: 'green',
+    fontSize: 14,
+    marginTop: 10,
+  },
+  successTextImage: {
+    color: 'green',
+    fontSize: 14,
+    marginTop: 10,
+  },
 };
 
 export default ChangeInfomationScreenStyles;

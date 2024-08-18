@@ -11,7 +11,7 @@ const LoginScreenStyles = StyleSheet.create({
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    width: '80%',
+    width: '90%',
     marginVertical: 10,
     borderWidth: 1,
     borderColor: '#ccc',
@@ -40,7 +40,7 @@ const LoginScreenStyles = StyleSheet.create({
   },
   button: {
     marginTop: 15,
-    width: '80%',
+    width: '90%',
     alignItems: 'center',
     backgroundColor: '#007bff',
     paddingHorizontal: 20,
@@ -63,6 +63,28 @@ const LoginScreenStyles = StyleSheet.create({
   logo: {
     width: 150,
     height: 150,
+  },
+  errorText: {
+    color: 'red',
+    // marginTop: 10,
+    // textAlign: 'center',
+    textAlign: 'left',
+    justifyContent: 'flex-start',
+  },
+  usernameError: {
+    color: 'red',
+    // marginBottom: 5,
+    textAlign: 'left',
+    alignSelf: 'flex-start',
+    paddingHorizontal: 20,
+  },
+  passwordError: {
+    color: 'red',
+    // marginBottom: 5,
+    textAlign: 'left',
+    alignSelf: 'flex-start',
+    paddingHorizontal: 20,
+
   },
 });
 

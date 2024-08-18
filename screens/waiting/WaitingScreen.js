@@ -74,7 +74,7 @@ const WaitingScreen = () => {
   const showAlert = (id) => {
     Alert.alert(
       'Xác nhận',
-      'Bạn có chắc chắn muốn bắt đầu đơn hàng?',
+      'Bạn có chắc chắn muốn bắt đầu chuyến xe?',
       [
         { text: 'Hủy', style: 'cancel' },
         { text: 'Đồng ý', onPress: () => handleStartTrip(id) },
@@ -146,7 +146,7 @@ const WaitingScreen = () => {
                   disabled={trip.statusTrip === 3}
                 >
                   <Text style={WaitingScreenStyles.buttonText}>
-                    {trip.statusTrip === 3 ? 'Đang giao hàng' : 'Nhận đơn hàng'}
+                    {trip.statusTrip === 3 ? 'Đang giao hàng' : 'Bắt đầu chuyến xe'}
                   </Text>
                 </TouchableOpacity>
               )}
