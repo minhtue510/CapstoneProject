@@ -203,12 +203,12 @@ const MenuScreen = () => {
                     </TouchableOpacity>
                     <Text style={MenuScreenStyles.boxText}>Thống kê</Text>
                 </View>
-                <View style={MenuScreenStyles.boxWrapper}>
+                {/* <View style={MenuScreenStyles.boxWrapper}>
                     <TouchableOpacity style={MenuScreenStyles.box} onPress={() => navigation.navigate('Chat', { screen: 'Chat' })}>
                         <Image source={chat} style={MenuScreenStyles.iconChat} />
                     </TouchableOpacity>
                     <Text style={MenuScreenStyles.boxText}>Nhắn tin</Text>
-                </View>
+                </View> */}
                 <View style={MenuScreenStyles.boxWrapper}>
                     <TouchableOpacity style={MenuScreenStyles.boxFind} onPress={() => navigation.navigate('Find', { screen: 'Find' })}>
                         {/* <Image source={find} style={MenuScreenStyles.iconFind} /> */}

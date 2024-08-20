@@ -274,3 +274,6 @@ const styles = StyleSheet.create({
 });
 
 export default OrderScreen;
+
+
+// keytool -genkeypair -v -storetype PKCS12 -keystore capstone.keystore -alias capstone -keyalg RSA -keysize 2048 -validity 10000

@@ -1,12 +1,9 @@
 import axios from "axios";
-import api from "./api"; // Đảm bảo api là đúng endpoint và được cấu hình chính xác
+import api from "./api"; 
 
 export const uploadEvidence = async (orderTripId, image) => {
   try {
     const formData = new FormData();
-
-    // Chuyển đổi uri file:// thành một đối tượng phù hợp với FormData
-    // formData.append("orderTripId", orderTripId);
     formData.append("image", {
       uri: image,
       type: "image/jpeg",
