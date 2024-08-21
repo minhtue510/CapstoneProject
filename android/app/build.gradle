@@ -94,8 +94,7 @@ android {
         buildConfigField("boolean", "REACT_NATIVE_UNSTABLE_USE_RUNTIME_SCHEDULER_ALWAYS", (findProperty("reactNative.unstable_useRuntimeSchedulerAlways") ?: true).toString())
     }
     signingConfigs {
-        
-         release {
+        release {
             if (project.hasProperty('MYAPP_UPLOAD_STORE_FILE')) {
                 storeFile file(MYAPP_UPLOAD_STORE_FILE)
                 storePassword MYAPP_UPLOAD_STORE_PASSWORD
@@ -104,9 +103,11 @@ android {
             }
         }
         debug {
-            storeFile file('debug.keystore')
+            // storeFile file('debug.keystore')
+            storeFile file('mey-upload-key.keystore')
             storePassword 'android'
-            keyAlias 'androiddebugkey'
+            // keyAlias 'androiddebugkey'
+            keyAlias 'my-key-alias'
             keyPassword 'android'
         }
     }

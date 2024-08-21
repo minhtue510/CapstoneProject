@@ -1,7 +1,11 @@
-import React from 'react';
-import { View, StyleSheet, Image } from 'react-native';
+import React, {useLayoutEffect} from 'react';
+import { View, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import back from "../../assets/icons/back.png";
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
+import { useNavigation } from "@react-navigation/native";
 const MapScreen = ({ route }) => {
+  const navigation = useNavigation();
+
   const {
     getLongitude,
     getLatitude,
@@ -30,7 +34,21 @@ const MapScreen = ({ route }) => {
     latitudeDelta: 0.5,
     longitudeDelta: 0.5,
   };
-
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerLeft: () => (
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          style={styles.backButton}
+        >
+          <Image source={back} style={styles.backIcon} />
+        </TouchableOpacity>
+      ),
+      headerStyle: styles.headerStyle,
+      headerTitleAlign: "center",
+      title: "Bản đồ",
+    });
+  }, [navigation]);
   return (
     <View style={styles.container}>
       <MapView
@@ -40,12 +58,12 @@ const MapScreen = ({ route }) => {
         showsUserLocation
         showsMyLocationButton
       >
-        {/* Marker cho điểm nhận */}
-        {orderType === 1 && (getLatitude && getLongitude) && (
+         {/* Marker cho điểm nhận */}
+         {orderType === 1 && (getLatitude && getLongitude) && (
           <Marker
             coordinate={{ latitude: getLatitude, longitude: getLongitude }}
             title="Điểm nhận"
-            description={`${addressGet}, ${provinceGet}, ${cityGet}`}
+            description={`${addressGet}, ${cityGet !== provinceGet ? `${cityGet}, ${provinceGet}` : cityGet}`}
             pinColor="red"
           />
         )}
@@ -55,7 +73,7 @@ const MapScreen = ({ route }) => {
           <Marker
             coordinate={{ latitude: deliveryLatitude, longitude: deliveryLongitude }}
             title="Điểm giao"
-            description={`${addressDelivery}, ${provinceDelivery}, ${cityDelivery}`}
+            description={`${addressDelivery}, ${cityDelivery !== provinceDelivery ? `${cityDelivery}, ${provinceDelivery}` : cityDelivery}`}
             pinColor="red"
           />
         )}
@@ -79,6 +97,16 @@ const styles = StyleSheet.create({
   },
   map: {
     ...StyleSheet.absoluteFillObject,
+  },
+  backButton: {
+    marginLeft: 10,
+  },
+  backIcon: {
+    width: 24,
+    height: 24,
+  },
+  headerStyle: {
+    backgroundColor: '#89CFF0',
   },
 });
 
