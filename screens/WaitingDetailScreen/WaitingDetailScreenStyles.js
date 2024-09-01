@@ -21,7 +21,7 @@ const WaitingDetailScreenStyles = StyleSheet.create({
     flex: 1
   },
   section: {
-    marginBottom: 10,
+    marginBottom: 5,
   },
   mapContainer: {
     flexDirection: 'row',

@@ -75,7 +75,10 @@ const OrderScreen = () => {
     }
   
     // Lọc các chuyến đi có statusTrip là 4
-    const filtered = trip.filter((item) => item.statusTrip === 4);
+    // const filtered = trip.filter((item) => item.statusTrip === 4);
+    // Lọc các chuyến đi có statusTrip là 4 hoặc 5
+const filtered = trip.filter((item) => item.statusTrip === 4 || item.statusTrip === 5);
+
   
     // Áp dụng bộ lọc cho "Lấy hàng" và "Giao hàng"
     const filteredByType = filtered.filter((item) => {
@@ -163,26 +166,28 @@ const OrderScreen = () => {
           {item.tripType === 1 ? 'Lấy hàng' : 'Giao hàng'}
         </Text>
         <TouchableOpacity
-          onPress={() => {
-            if (item.statusTrip !== 4) {
-              handleStartTrip(item.tripId);
-            }
-          }}
-          disabled={item.statusTrip === 4}
-          style={[
-            OrderScreenStyles.tripType,
-            {
-              backgroundColor: item.statusTrip === 4 ? '#f6ffed' : '#f6ffed',
-              color: '#389e0d',
-              borderColor: '#b7eb8f',
-              borderWidth: 1,
-            }
-          ]}
-        >
-          <Text style={OrderScreenStyles.buttonText}>
-            {item.statusTrip === 4 ? 'Đã hoàn thành' : 'Bắt đầu đơn hàng'}
-          </Text>
-        </TouchableOpacity>
+        onPress={() => {
+          if (item.statusTrip !== 4 && item.statusTrip !== 5) {
+            handleStartTrip(item.tripId);
+          }
+        }}
+        disabled={item.statusTrip === 4 || item.statusTrip === 5}
+        style={[
+          OrderScreenStyles.tripType,
+          {
+            backgroundColor: item.statusTrip === 5 ? '#fff1f0' : '#f6ffed',
+            borderColor: item.statusTrip === 5 ? '#ff4d4f' : '#b7eb8f',
+            borderWidth: 1,
+          }
+        ]}
+      >
+        <Text style={[
+          OrderScreenStyles.buttonText,
+          { color: item.statusTrip === 5 ? '#ff4d4f' : '#389e0d' }
+        ]}>
+          {item.statusTrip === 4 ? 'Đã hoàn thành' : item.statusTrip === 5 ? 'Chuyến xe gặp sự cố' : 'Bắt đầu đơn hàng'}
+        </Text>
+      </TouchableOpacity>
       </View>
     </View>
   );

@@ -42,7 +42,7 @@ const OrderScreenStyles = StyleSheet.create({
   orderIDContainer: {
     flexDirection: 'row',
     alignItems: 'center', 
-    marginBottom: 10,
+    marginBottom: 1,
     fontWeight: 'bold',
     fontSize: 16,
     marginTop: 5,

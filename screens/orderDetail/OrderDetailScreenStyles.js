@@ -21,7 +21,7 @@ const OrderDetailScreenStyles = StyleSheet.create({
     flex: 1
   },
   section: {
-    marginBottom: 10,
+    marginBottom: 5,
   },
   mapContainer: {
     flexDirection: 'row',
@@ -39,7 +39,7 @@ const OrderDetailScreenStyles = StyleSheet.create({
   sectionTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    marginBottom: 10,
+    marginBottom: 5,
     color: '#333', // Darker text color for section titles
   },
   sectionText: {
@@ -131,17 +131,21 @@ const OrderDetailScreenStyles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   modalContent: {
-    width: '100%',
-    height: '100%',
-    backgroundColor: 'white',
+    width: '80%',
+    height: '80%',
+    backgroundColor: '#fff',
     borderRadius: 10,
-    overflow: 'hidden',
+    padding: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   closeButton: {
     position: 'absolute',
     top: 10,
     right: 10,
-    zIndex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    padding: 10,
+    borderRadius: 50,
   },
   closeButtonText: {
     fontSize: 18,
@@ -168,9 +172,10 @@ const OrderDetailScreenStyles = StyleSheet.create({
   itemImage: {
     width: 50, // điều chỉnh kích thước hình ảnh
     height: 50, // điều chỉnh kích thước hình ảnh
+    marginTop: 10,
   },
   itemEvidenceContainer: {
-    marginTop: 10,
+    // marginTop: 10,
   },
   itemImage: {
     width: 50,
@@ -183,12 +188,13 @@ const OrderDetailScreenStyles = StyleSheet.create({
     alignItems: 'center',
   },
   modalContainer: {
-    width: '80%',
-    height: '80%',
+    width: '90%',
+    height: '90%',
     backgroundColor: 'white',
     borderRadius: 10,
     overflow: 'hidden',
     alignItems: 'center',
+    // zIndex: 100,
   },
   fullImage: {
     width: '100%',

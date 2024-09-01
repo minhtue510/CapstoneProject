@@ -75,8 +75,10 @@ const HistoryScreen = ({ route }) => {
         <Text style={HistoryScreenStyles.itemName}>Rộng: {item?.item.width * 100} cm</Text>
         <Text style={HistoryScreenStyles.itemName}>Cao: {item?.item.height * 100} cm</Text>
       </View> */}
-       <Text style={HistoryScreenStyles.itemName}>Kích thước(D x R x C): {item?.item.length * 100} cm x {item?.item.width * 100} cm x {item?.item.height * 100} cm</Text>
-      <Text style={HistoryScreenStyles.itemName}>Số lượng: {item?.item.quantityItem}</Text>
+       <Text style={HistoryScreenStyles.itemName}>Kích thước(D x R x C):</Text>
+       <Text style={HistoryScreenStyles.itemName}>{item?.item.length * 100} cm x {item?.item.width * 100} cm x {item?.item.height * 100} cm</Text>
+      {/* <Text style={HistoryScreenStyles.itemName}>Khối lượng: {item?.item.itemWeight} kg</Text> */}
+      <Text style={HistoryScreenStyles.itemName}>Số lượng: {item?.item.quantityOfPackage} kiện</Text>
       <View style={HistoryScreenStyles.itemContainer}>
         <Text style={HistoryScreenStyles.itemDescription}>Mô tả: {item?.item.description}</Text>
       </View>
@@ -105,13 +107,25 @@ const HistoryScreen = ({ route }) => {
                 <>
                   <Text style={HistoryScreenStyles.sectionText}>Tên người gửi: {orderInfo.orderLocation?.getBy}</Text>
                   <Text style={HistoryScreenStyles.sectionText}>Số điện thoại: {orderInfo.orderLocation?.getPhone}</Text>
-                  <Text style={HistoryScreenStyles.sectionText}>Địa chỉ: {orderInfo.orderLocation?.addressGet},{orderInfo.orderLocation?.provinceGet} </Text>
-                </>
+                  <Text style={HistoryScreenStyles.sectionText}>
+                    Địa chỉ nhận: {orderInfo.orderLocation?.addressGet},
+                    {orderInfo.orderLocation?.cityGet === orderInfo.orderLocation?.provinceGet
+                      ? orderInfo.orderLocation?.cityGet
+                      : `${orderInfo.orderLocation?.cityGet}, ${orderInfo.orderLocation?.provinceGet}`}
+                  </Text>
+                  {/* <Text style={HistoryScreenStyles.sectionText}>Địa chỉ nhận: {orderInfo.orderLocation?.addressGet},{orderInfo.orderLocation?.provinceGet} </Text> */}
+                </>     
               ) : (
                 <>
                   <Text style={HistoryScreenStyles.sectionText}>Tên người nhận: {orderInfo.orderLocation?.deliveryTo}</Text>
                   <Text style={HistoryScreenStyles.sectionText}>Số điện thoại: {orderInfo.orderLocation?.deliveryPhone}</Text>
-                  <Text style={HistoryScreenStyles.sectionText}>Địa chỉ: {orderInfo.orderLocation?.addressDelivery}, {orderInfo.orderLocation?.cityDelivery}, {orderInfo.orderLocation?.provinceDelivery}</Text>
+                  <Text style={HistoryScreenStyles.sectionText}>
+                    Địa chỉ giao: {orderInfo.orderLocation?.addressDelivery},
+                    {orderInfo.orderLocation?.cityDelivery === orderInfo.orderLocation?.provinceDelivery
+                      ? orderInfo.orderLocation?.cityDelivery
+                      : `${orderInfo.orderLocation?.cityDelivery}, ${orderInfo.orderLocation?.provinceDelivery}`}
+                  </Text>
+                  {/* <Text style={HistoryScreenStyles.sectionText}>Địa chỉ giao: {orderInfo.orderLocation?.addressDelivery}, {orderInfo.orderLocation?.cityDelivery}, {orderInfo.orderLocation?.provinceDelivery}</Text> */}
                 </>
               )}
             </View>

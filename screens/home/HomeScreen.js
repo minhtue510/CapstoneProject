@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo, useLayoutEffect } from 'react';
-import { View, Text, TouchableOpacity, Image, Alert, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, Image, Alert, ScrollView, RefreshControl  } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import HomeScreenStyles from './HomeScreenStyles';
 import back from '../../assets/icons/back.png';
@@ -8,10 +8,12 @@ import checkIcon from '../../assets/icons/check.png';
 import { getOrderTripOfIdleDriverId, startOrderTrip } from '../../api/order';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+
 const HomeScreen = ({ route }) => {
   const navigation = useNavigation();
   const [trip, setTrip] = useState(undefined);
   const [logTrip, setLogTrip] = useState('Bắt đầu đơn hàng');
+  const [refreshing, setRefreshing] = useState(false);
 
   const handleOrderPress = async (tripId) => {
     try {
@@ -40,10 +42,30 @@ const HomeScreen = ({ route }) => {
     fetchData();
   }, []);
 
+  const onRefresh = async () => {
+    setRefreshing(true);
+    try {
+      const loginInfoString = await AsyncStorage.getItem('loginInfo');
+      if (loginInfoString !== null) {
+        const loginInfo = JSON.parse(loginInfoString);
+        const trip = await getOrderTripOfIdleDriverId(loginInfo.idByRole, 2);
+        setTrip(trip);
+      } else {
+        console.log('Không có thông tin');
+      }
+    } catch (error) {
+      // console.error('Lỗi khi làm mới dữ liệu:', error);
+    }
+    setRefreshing(false);
+  };
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerLeft: () => (
-        <TouchableOpacity onPress={() => navigation.goBack()} style={HomeScreenStyles.backButton}>
+        <TouchableOpacity 
+        // onPress={() => navigation.goBack()} 
+        onPress={() => navigation.navigate("Menu")}
+        style={HomeScreenStyles.backButton}>
           <Image source={back} style={HomeScreenStyles.backIcon} />
         </TouchableOpacity>
       ),
@@ -100,7 +122,10 @@ const HomeScreen = ({ route }) => {
   }, [trip]);
 
   return (
-    <ScrollView contentContainerStyle={HomeScreenStyles.scrollContainer}>
+    <ScrollView contentContainerStyle={HomeScreenStyles.scrollContainer}
+    refreshControl={
+      <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+    }>
       <View style={HomeScreenStyles.container}>
         {renderData.length === 0 ? (
           <View style={HomeScreenStyles.noOrdersContainer}>

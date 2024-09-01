@@ -24,27 +24,54 @@ const MenuScreen = () => {
     const [orderTripCount, setOrderTripCount] = useState(0);
     const [refreshing, setRefreshing] = useState(false);
 
+    // const fetchData = useCallback(async () => {
+    //     try {
+    //         const loginInfoString = await AsyncStorage.getItem('loginInfo');
+    //         if (loginInfoString) {
+    //             const loginInfo = JSON.parse(loginInfoString);
+    //             const fetchedTrip = await getOrderTripOfIdleDriverId(loginInfo.idByRole, 2);
+    //             setTrip(fetchedTrip);
+
+    //             // Tính toán số lượng đơn và số lượng gói hàng
+    //             if (fetchedTrip) {
+    //                 setTripCount(fetchedTrip.tripId ? 1 : 0);
+    //                 setOrderTripCount(fetchedTrip.orderTripId.length);
+    //             } else {
+    //                 setTripCount(0);
+    //                 setOrderTripCount(0);
+    //             }
+    //         } else {
+    //             console.log('Không có thông tin');
+    //         }
+    //     } catch (error) {
+    //         // Xử lý lỗi
+    //     } finally {
+    //         setRefreshing(false); // Dừng làm mới khi hoàn tất
+    //     }
+    // }, []);
+
     const fetchData = useCallback(async () => {
         try {
             const loginInfoString = await AsyncStorage.getItem('loginInfo');
             if (loginInfoString) {
                 const loginInfo = JSON.parse(loginInfoString);
                 const fetchedTrip = await getOrderTripOfIdleDriverId(loginInfo.idByRole, 2);
-                setTrip(fetchedTrip);
 
-                // Tính toán số lượng đơn và số lượng gói hàng
-                if (fetchedTrip) {
-                    setTripCount(fetchedTrip.tripId ? 1 : 0);
-                    setOrderTripCount(fetchedTrip.orderTripId.length);
+                if (fetchedTrip && fetchedTrip.statusTrip === 2) {
+                    const isViewed = await AsyncStorage.getItem('notificationViewed');
+                    if (isViewed !== 'true') {
+                        setNotificationCount(1); // Hiển thị số "1" khi có đơn mới và chưa được xem
+                    } else {
+                        setNotificationCount(0); // Đã xem thông báo, đặt về 0
+                    }
                 } else {
-                    setTripCount(0);
-                    setOrderTripCount(0);
+                    setNotificationCount(0); // Không có đơn mới hoặc không phải statusTrip 2, đặt về 0
                 }
             } else {
                 console.log('Không có thông tin');
             }
         } catch (error) {
-            // Xử lý lỗi
+            // console.error('Lỗi khi lấy dữ liệu:', error);
         } finally {
             setRefreshing(false); // Dừng làm mới khi hoàn tất
         }
@@ -117,22 +144,60 @@ const MenuScreen = () => {
         fetchNotificationCount();
     }, []);
 
+    // useEffect(() => {
+    //     const fetchUserInfoAndNotification = async () => {
+    //         try {
+    //             const loginInfoString = await AsyncStorage.getItem('loginInfo');
+    //             if (loginInfoString) {
+    //                 const loginInfo = JSON.parse(loginInfoString);
+    
+    //                 // Cập nhật thông tin người dùng
+    //                 setFullName(loginInfo.fullName);
+    //                 setAccountId(loginInfo.accounId);
+    
+    //                 // Lấy và kiểm tra thông báo mới
+    //                 const fetchedTrip = await getOrderTripOfIdleDriverId(loginInfo.idByRole, 2);
+    //                 console.log('Fetched trip:', fetchedTrip);
+    
+    //                 if (fetchedTrip && fetchedTrip.statusTrip === 2) {
+    //                     const isViewed = await AsyncStorage.getItem('notificationViewed');
+    //                     console.log('Notification viewed:', isViewed);
+    
+    //                     if (isViewed !== 'true') {
+    //                         setNotificationCount(1); // Hiển thị số "1" khi có đơn mới và chưa được xem
+    //                     } else {
+    //                         setNotificationCount(0); // Đã xem thông báo, đặt về 0
+    //                     }
+    //                 } 
+    //                 else {
+    //                     setNotificationCount(0); // Không có đơn mới hoặc không phải statusTrip 2, đặt về 0
+    //                 }
+    
+    //                 // Nếu bạn cần cập nhật avatar, có thể thực hiện trong đây luôn
+    //                 if (loginInfo.image) {
+    //                     setAvatar({ uri: loginInfo.image });
+    //                 } else {
+    //                     setAvatar(Avatar);
+    //                 }
+    //             } else {
+    //                 console.error('Thông tin đăng nhập không tồn tại trong AsyncStorage.');
+    //                 setAvatar(Avatar); // Đặt avatar mặc định nếu không có thông tin đăng nhập
+    //             }
+    //         } catch (error) {
+    //             // console.error('Lỗi khi lấy dữ liệus:', error);
+    //         }
+    //     };
+    
+    //     fetchUserInfoAndNotification();
+    // }, []);
+    
+
     const markNotificationsAsRead = async () => {
         try {
-            const notifications = await AsyncStorage.getItem('notifications');
-            if (notifications) {
-                const parsedNotifications = JSON.parse(notifications);
-                const updatedNotifications = parsedNotifications.map(notification =>
-                    notification.status === 'unread'
-                        ? { ...notification, status: 'read' }
-                        : notification
-                );
-
-                await AsyncStorage.setItem('notifications', JSON.stringify(updatedNotifications));
-                setNotificationCount(0); // Đặt lại số lượng thông báo sau khi đánh dấu tất cả là đã đọc
-            }
+            await AsyncStorage.setItem('notificationViewed', 'true');
+            setNotificationCount(0); // Đặt lại số lượng thông báo sau khi đánh dấu đã xem
         } catch (error) {
-            // Xử lý lỗi
+            console.error('Lỗi khi đánh dấu thông báo:', error);
         }
     };
 

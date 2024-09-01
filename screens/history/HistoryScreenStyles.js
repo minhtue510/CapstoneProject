@@ -21,7 +21,7 @@ const HistoryScreenStyles = StyleSheet.create({
     flex: 1
   },
   section: {
-    marginBottom: 20,
+    // marginBottom: 20,
   },
   sectionTitle: {
     fontSize: 18,
@@ -49,7 +49,7 @@ const HistoryScreenStyles = StyleSheet.create({
   },
   itemDescription: {
     fontSize: 14,
-    marginBottom: 5,
+    marginBottom: -10,
     color: '#666', // Slightly darker text color for item description
   },
   itemPrice: {

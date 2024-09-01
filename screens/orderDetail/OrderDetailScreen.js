@@ -1,11 +1,12 @@
 import React, { useRef, useState, useEffect, useLayoutEffect } from "react";
-import {View,Text,TouchableOpacity,Alert,StyleSheet,Image,Modal} from "react-native";
+import { View, Text, TouchableOpacity, Alert, StyleSheet, Image, Modal, ScrollView, SafeAreaView } from "react-native";
 import OrderDetailScreenStyles from "./OrderDetailScreenStyles"; // Import styles
 import { completeOderTrip, getItemOderTrip } from "../../api/order";
 import back from "../../assets/icons/back.png";
 import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
 import { uploadEvidence } from "../../api/evidence";
+
 
 const OrderDetailScreen = ({ route }) => {
   const cameraRef = useRef();
@@ -69,7 +70,7 @@ const OrderDetailScreen = ({ route }) => {
           itemOrderInfo?.itemOrderTripResponse[0]?.orderTrip?.status === 4
         );
         const evidenceExists = itemOrderInfo.itemOrderTripResponse.some(e => e.orderTrip.evidence);
-      setHasEvidence(evidenceExists);
+        setHasEvidence(evidenceExists);
       } catch (error) {
         console.error("Error fetching order info:", error);
         Alert.alert(
@@ -94,7 +95,7 @@ const OrderDetailScreen = ({ route }) => {
     try {
       Alert.alert(
         "Xác nhận",
-        "Bạn có chắc chắn muốn xác nhận đơn hàng?",
+        "Bạn có chắc chắn muốn hoàn thành đơn hàng?",
         [
           {
             text: "Hủy",
@@ -141,7 +142,8 @@ const OrderDetailScreen = ({ route }) => {
   };
 
   return (
-    <View style={OrderDetailScreenStyles.container}>
+    <SafeAreaView style={OrderDetailScreenStyles.container}>
+      <ScrollView>
       <View style={OrderDetailScreenStyles.section}>
         <Text style={OrderDetailScreenStyles.sectionTitle}>
           Thông tin đơn hàng
@@ -230,10 +232,16 @@ const OrderDetailScreen = ({ route }) => {
                 Tên hàng hóa: {e?.item.itemName}
               </Text>
               <Text style={OrderDetailScreenStyles.itemName}>
-              Kích thước(D x R X C): {e?.item.length * 100} cm x {e?.item.width * 100} cm x {e?.item.height * 100} cm
+                Kích thước(D x R X C):
               </Text>
-              <Text style={OrderDetailScreenStyles.itemQuantity}>
-                Số lượng: {e?.item.quantityItem}
+              <Text style={OrderDetailScreenStyles.itemName}>
+                {e?.item.length * 100} cm x {e?.item.width * 100} cm x {e?.item.height * 100} cm
+              </Text>
+              {/* <Text style={OrderDetailScreenStyles.itemName}>
+                Trọng lượng: {e?.item.itemWeight} kg
+              </Text> */}
+              <Text style={OrderDetailScreenStyles.itemName}>
+                Số lượng: {e?.item.quantityOfPackage} kiện
               </Text>
               <View style={OrderDetailScreenStyles.itemContainer}>
                 <Text style={OrderDetailScreenStyles.itemDescription}>
@@ -241,16 +249,16 @@ const OrderDetailScreen = ({ route }) => {
                 </Text>
               </View>
               {e?.orderTrip?.evidence && (
-        <TouchableOpacity
-          style={OrderDetailScreenStyles.itemEvidenceContainer}
-          onPress={() => handleImagePress(e?.orderTrip.evidence)}
-        >
-          <Image
-            source={{ uri: e?.orderTrip.evidence }}
-            style={OrderDetailScreenStyles.itemImage}
-          />
-        </TouchableOpacity>
-      )}
+                <TouchableOpacity
+                  style={OrderDetailScreenStyles.itemEvidenceContainer}
+                  onPress={() => handleImagePress(e?.orderTrip.evidence)}
+                >
+                  <Image
+                    source={{ uri: e?.orderTrip.evidence }}
+                    style={OrderDetailScreenStyles.itemImage}
+                  />
+                </TouchableOpacity>
+              )}
             </View>
           ))}
         <Modal
@@ -275,11 +283,10 @@ const OrderDetailScreen = ({ route }) => {
         </Modal>
       </View>
 
-      {orderInfo.itemOrderTripResponse?.[0]?.orderTrip?.type !== 1 && (
-      <View style={OrderDetailScreenStyles.containerIcon}>
-        {!isOrderDelivered &&
-          orderInfo.itemOrderTripResponse?.orderTrip?.status !== 4 && (
-            !hasEvidence && (
+      {orderInfo.itemOrderTripResponse?.[0]?.orderTrip?.type !== 1 && !hasEvidence && (
+        <View style={OrderDetailScreenStyles.containerIcon}>
+          {!isOrderDelivered &&
+            orderInfo.itemOrderTripResponse?.orderTrip?.status !== 4 && (
               <TouchableOpacity
                 onPress={handleCamera}
                 style={OrderDetailScreenStyles.buttonTakePicture}
@@ -289,9 +296,7 @@ const OrderDetailScreen = ({ route }) => {
                   style={OrderDetailScreenStyles.iconCamera}
                 />
               </TouchableOpacity>
-            )
-          )}
-        {!hasEvidence && (
+            )}
           <TouchableOpacity
             onPress={pickImage}
             style={OrderDetailScreenStyles.buttonChooseImage}
@@ -301,17 +306,17 @@ const OrderDetailScreen = ({ route }) => {
               style={OrderDetailScreenStyles.iconImage}
             />
           </TouchableOpacity>
-        )}
-        {image && (
-          <TouchableOpacity onPress={openModal}>
-            <Image
-              source={{ uri: image }}
-              style={OrderDetailScreenStyles.image}
-            />
-          </TouchableOpacity>
-        )}
-      </View>
-    )}
+          {image && (
+            <TouchableOpacity onPress={openModal}>
+              <Image
+                source={{ uri: image }}
+                style={OrderDetailScreenStyles.image}
+              />
+            </TouchableOpacity>
+          )}
+        </View>
+      )}
+
 
 
       {orderInfo.itemOrderTripResponse?.[0]?.orderTrip?.type !== 1 && (
@@ -334,7 +339,7 @@ const OrderDetailScreen = ({ route }) => {
                 padding: 10,
                 borderRadius: 5,
                 textAlign: "center",
-                marginTop: 10,
+                // marginTop: -10,
                 width: "100%",
               },
             ]}
@@ -357,7 +362,8 @@ const OrderDetailScreen = ({ route }) => {
           </TouchableOpacity>
         </View>
       </Modal>
-    </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
